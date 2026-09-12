@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:ic="using:FluentIcons.Avalonia"
 			 xmlns:ui="using:FluentAvalonia.UI.Controls"
+			 Loaded="Page_Loaded"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ARCRemake.AddNameList">
 	<Grid Margin="10">
@@ -13,15 +14,15 @@
 				<TextBlock DockPanel.Dock="Top" Text="在最后，请您创建用于点名的名单。"/>
 				<Grid DockPanel.Dock="Top" Margin="0,5">
 					<TextBlock Text="名单名称：" VerticalAlignment="Center" FontWeight="Bold"/>
-					<TextBox HorizontalAlignment="Stretch" Margin="70,0,0,0"/>
+					<TextBox Text="" x:Name="NameText" HorizontalAlignment="Stretch" Margin="70,0,0,0" TextChanged="NameText_Changed"/>
 				</Grid>
-				<TextBlock DockPanel.Dock="Top" Text="名单内容：" VerticalAlignment="Center" FontWeight="Bold"/>
-				<TextBox DockPanel.Dock="Top" AcceptsReturn="True"
+				<TextBlock DockPanel.Dock="Top" Text="名单内容：（每个名字占一行）" VerticalAlignment="Center" FontWeight="Bold" Margin="0,5"/>
+				<TextBox Text="" x:Name="NameContent" DockPanel.Dock="Top" AcceptsReturn="True" TextChanged="NameContent_Changed"
 						TextWrapping="Wrap"/>
 			</DockPanel>
 		
 		
-		<Button Classes="accent" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15" Click="Button_Click">
+		<Button x:Name="ContinueButton" IsEnabled="False" Classes="accent" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15" Click="Button_Click">
 			<StackPanel Orientation="Horizontal">
 				<TextBlock Text=" " Margin="2"/>
 				<ic:FluentIcon Icon="ArrowRight" Margin="2"/>

@@ -7,6 +7,7 @@
 			 Loaded="Page_Loaded"
 			 Unloaded="Page_UnLoaded"
              x:Class="ARCRemake.SettingsPage">
+	<ScrollViewer Margin="5">
 	<StackPanel Margin="5">
 		<TextBlock x:Name="ModeTitle" Text="点名设置" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 		<StackPanel x:Name="RootPanel">
@@ -23,10 +24,26 @@
 						<ic:FluentIcon Icon="Delete"/>
 					</Button>
 				</StackPanel>
-				<ComboBox x:Name="NameListBox" HorizontalAlignment="Stretch" Margin="70,0,150,0" VerticalAlignment="Center"/>
+				<ComboBox x:Name="NameListBox" HorizontalAlignment="Stretch" Margin="70,0,150,0" VerticalAlignment="Center" />
 				
 			</Grid>
-
+			<StackPanel Orientation="Horizontal" Margin="5">
+				<TextBlock Text="常规点名间隔时长(ms):" VerticalAlignment="Center"/>
+				<NumericUpDown SizeChanged="CGDM_TextChanged" x:Name="CGDM"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal" Margin="5">
+				<TextBlock Text="定时点名时长(s):" VerticalAlignment="Center"/>
+				<NumericUpDown SizeChanged="DSDM_TextChanged" x:Name="DSDM"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal" Margin="5">
+				<TextBlock Text="批量点名个数:" VerticalAlignment="Center"/>
+				<NumericUpDown SizeChanged="PLDM_TextChanged" x:Name="PLDM"/>
+			</StackPanel>
+			<StackPanel Margin="5,0" Orientation="Horizontal">
+				<TextBlock Text="恢复默认配置项：" VerticalAlignment="Center"/>
+				<Button Content="   恢复默认   " Foreground="Red" Click="Recovery_Click"/>
+			</StackPanel>
 		</StackPanel>
 	</StackPanel>
+		</ScrollViewer>
 </UserControl>

@@ -12,7 +12,7 @@
 		<TextBlock x:Name="ModeTitle" Text="示例点名" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 		<TextBlock x:Name="NameBlock" IsVisible="True" Text="示例名字" FontSize="48" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 		<ListBox x:Name="ListDianMingBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="100" BorderBrush="Gray" BorderThickness="2" ScrollViewer.AllowAutoHide="False" ScrollViewer.VerticalScrollBarVisibility="Visible" IsVisible="False"/>
-		<Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Classes="accent">
+		<Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Classes="accent" x:Name="RootButton" Click="RootButton_Click">
 			<Button.Content>
 				<StackPanel Orientation="Horizontal" Margin="30,10">
 					<ic:FluentIcon Icon="Play"/>

@@ -22,17 +22,28 @@ namespace ARCRemake
             {
                 if(File.Exists($"{Environment.CurrentDirectory}/Config.json"))
                 {
-                    if(JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json").OOBEStatus == false)
+                    try
+                    {
+                        if (JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json").OOBEStatus == false)
+                        {
+                            JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", ConfigHelper.InitConfig());
+                            desktop.MainWindow = new OOBEWindow();
+                            base.OnFrameworkInitializationCompleted();
+                            return;
+
+                        }
+                        desktop.MainWindow = new MainWindow();
+                        base.OnFrameworkInitializationCompleted();
+                        return;
+                    }
+                    catch
                     {
                         JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", ConfigHelper.InitConfig());
                         desktop.MainWindow = new OOBEWindow();
                         base.OnFrameworkInitializationCompleted();
                         return;
-
                     }
-                    desktop.MainWindow = new MainWindow();
-                    base.OnFrameworkInitializationCompleted();
-                    return;
+                    
                 }
                 else
                 {

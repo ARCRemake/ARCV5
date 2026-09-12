@@ -17,6 +17,9 @@ namespace ARCRemake.Utils
         public required bool AppUseSystemTheme { get; set; }
         public required bool OOBEStatus { get; set; }
         public required string CurrentNameListPath { get; set;  }
+        public required int IntervalTick { get; set; }
+        public required int ScheduledSeconds { get; set; }
+        public required int BatchCounts { get; set; }
     }
     
     public static class ConfigHelper
@@ -28,7 +31,10 @@ namespace ARCRemake.Utils
                 AppUseDarkTheme = true,
                 AppUseSystemTheme = true,
                 OOBEStatus = false,
-                CurrentNameListPath = ""
+                CurrentNameListPath = "",
+                IntervalTick = 50,
+                ScheduledSeconds = 10,
+                BatchCounts = 3
             };
         }
     }

@@ -31,7 +31,8 @@ public partial class DianMingPage : UserControl
         }
     }
 
+    private void RootButton_Click(object s, RoutedEventArgs e)
+    {
 
-
-   
+    }
 }

@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace ARCRemake;
 
-public partial class ListDianMingPage : UserControl
+public partial class FirstScreen : UserControl
 {
-    public ListDianMingPage()
+    public FirstScreen()
     {
         InitializeComponent();
     }

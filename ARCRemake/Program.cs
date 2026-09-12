@@ -1,5 +1,7 @@
 ﻿using Avalonia;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace ARCRemake
 {
@@ -9,8 +11,16 @@ namespace ARCRemake
         // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
         // yet and stuff might break.
         [STAThread]
-        public static void Main(string[] args) => BuildAvaloniaApp()
+        public static void Main(string[] args)
+        {
+            if(!Directory.Exists($"{Environment.CurrentDirectory}/NameLists"))
+            {
+                Directory.CreateDirectory($"{Environment.CurrentDirectory}/NameLists");
+
+            }
+            BuildAvaloniaApp()
             .StartWithClassicDesktopLifetime(args);
+        }
 
         // Avalonia configuration, don't remove; also used by visual designer.
         public static AppBuilder BuildAvaloniaApp()

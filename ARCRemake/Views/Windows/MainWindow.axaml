@@ -8,30 +8,30 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="ARCRemake.MainWindow"
         Title="自动点名器">
-	<ui:NavigationView ExpandedModeThresholdWidth="99999" IsBackButtonVisible="False" IsBackEnabled="False" IsSettingsVisible="False">
+	<ui:NavigationView  x:Name="RootNavi" SelectionChanged="RootNavi_SelectionChanged" ExpandedModeThresholdWidth="99999" IsBackButtonVisible="False" IsBackEnabled="False" IsSettingsVisible="False">
 		<ui:NavigationView.MenuItems>
-			<ui:NavigationViewItem Content="常规点名">
+			<ui:NavigationViewItem x:Name="NaviItem0" Content="常规点名">
 				<ui:NavigationViewItem.IconSource>
 					<ui:ImageIconSource>
 						<ic:FluentImage Icon="Home"/>
 					</ui:ImageIconSource>
 				</ui:NavigationViewItem.IconSource>
 			</ui:NavigationViewItem>
-			<ui:NavigationViewItem Content="立即点名">
+			<ui:NavigationViewItem x:Name="NaviItem1" Content="立即点名">
 				<ui:NavigationViewItem.IconSource>
 					<ui:ImageIconSource>
 						<ic:FluentImage Icon="Flash"/>
 					</ui:ImageIconSource>
 				</ui:NavigationViewItem.IconSource>
 			</ui:NavigationViewItem>
-			<ui:NavigationViewItem Content="延时点名">
+			<ui:NavigationViewItem x:Name="NaviItem2" Content="延时点名">
 				<ui:NavigationViewItem.IconSource>
 					<ui:ImageIconSource>
 						<ic:FluentImage Icon="Timer"/>
 					</ui:ImageIconSource>
 				</ui:NavigationViewItem.IconSource>
 			</ui:NavigationViewItem>
-			<ui:NavigationViewItem Content="批量点名">
+			<ui:NavigationViewItem x:Name="NaviItem3" Content="批量点名">
 				<ui:NavigationViewItem.IconSource>
 					<ui:ImageIconSource>
 						<ic:FluentImage Icon="List"/>
@@ -40,14 +40,14 @@
 			</ui:NavigationViewItem>
 		</ui:NavigationView.MenuItems>
 		<ui:NavigationView.FooterMenuItems>
-			<ui:NavigationViewItem Content="点名设置">
+			<ui:NavigationViewItem x:Name="NaviItem4" Content="点名设置">
 				<ui:NavigationViewItem.IconSource>
 					<ui:ImageIconSource>
 						<ic:FluentImage Icon="Settings"/>
 					</ui:ImageIconSource>
 				</ui:NavigationViewItem.IconSource>
 			</ui:NavigationViewItem>
-			<ui:NavigationViewItem Content="关于程序">
+			<ui:NavigationViewItem x:Name="NaviItem5" Content="关于程序">
 				<ui:NavigationViewItem.IconSource>
 					<ui:ImageIconSource>
 						<ic:FluentImage Icon="Info"/>
@@ -55,5 +55,6 @@
 				</ui:NavigationViewItem.IconSource>
 			</ui:NavigationViewItem>
 		</ui:NavigationView.FooterMenuItems>
+		<ui:Frame x:Name="RootFrame"/>
 	</ui:NavigationView>
 </wnd:AppWindow>

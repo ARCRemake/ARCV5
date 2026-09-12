@@ -1,0 +1,15 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:ui="using:FluentAvalonia.UI.Controls"
+			 xmlns:ic="using:FluentIcons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ARCRemake.LastScreen">
+	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+		<TextBlock Text="恭喜！您已配置完毕，现在可以开始点名了！" FontSize="18" FontWeight="Bold"/>
+		<Button Height="64" Width="64" ClipToBounds="True" CornerRadius="64" Classes="accent" HorizontalAlignment="Center" Margin="10" >
+			<ic:FluentIcon Icon="ArrowRight" FontSize="24"/>
+		</Button>
+	</StackPanel>
+</UserControl>

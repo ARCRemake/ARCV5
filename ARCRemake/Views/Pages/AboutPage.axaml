@@ -2,7 +2,99 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:ic="using:FluentIcons.Avalonia"
+			 xmlns:ui="using:FluentAvalonia.UI.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 Loaded="Page_Loaded"
+			 Unloaded="Page_UnLoaded"
              x:Class="ARCRemake.AboutPage">
-  Welcome to Avalonia!
+	<ScrollViewer Margin="5">
+		<StackPanel>
+			<TextBlock x:Name="ModeTitle" Text="关于程序" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+			<ui:SettingsExpander HorizontalAlignment="Stretch" Margin="5">
+				<ui:SettingsExpander.Header>
+					<Grid HorizontalAlignment="Stretch">
+						<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+							<Viewbox Width="48" Height="48">
+								<Canvas Width="24" Height="24">
+									<Ellipse Canvas.Left="8" Canvas.Top="2" Width="8" Height="8"
+											 Stroke="#c026d3" StrokeThickness="1.5" Fill="Transparent"/>
+									<Path Data="M20 17.5c0 2.485 0 4.5-8 4.5s-8-2.015-8-4.5S7.582 13 12 13s8 2.015 8 4.5Z"
+										  Stroke="#c026d3" StrokeThickness="1.5" Fill="Transparent"/>
+								</Canvas>
+							</Viewbox>
+							<StackPanel Margin="5" VerticalAlignment="Center">
+								<TextBlock Text="自动点名器" FontSize="16" FontWeight="Bold"/>
+								<TextBlock Text="易用，流畅，美观，先进的教室大屏点名软件" Foreground="Gray" FontSize="12"/>
+								<StackPanel Orientation="Horizontal">
+									<Button Content=" 漏洞反馈 " Margin="5,0"/>
+									<Button Content=" 许可协议 "/>
+								</StackPanel>
+							</StackPanel>
+						</StackPanel>
+						<Button Classes="accent" HorizontalAlignment="Right" VerticalAlignment="Center">
+							<StackPanel Orientation="Horizontal">
+								<ic:FluentIcon Icon="ArrowClockwise" Margin="2"/>
+								<TextBlock Text="检测更新" Margin="2"/>
+							</StackPanel>
+						</Button>
+					</Grid>
+				</ui:SettingsExpander.Header>
+			</ui:SettingsExpander>
+			<StackPanel x:Name="RootPanel" Margin="5">
+				
+				<StackPanel Orientation="Horizontal" Margin="2">
+					<TextBlock Text="项目地址:" VerticalAlignment="Center"/>
+					<HyperlinkButton VerticalAlignment="Center">
+						<StackPanel Orientation="Horizontal">
+							<ic:FluentIcon Icon="Link" Margin="5,2"/>
+							<TextBlock Text="https://github.com/ARCRemake/ARCV5" Margin="2"/>
+						</StackPanel>
+					</HyperlinkButton>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal" Margin="2">
+					<TextBlock Text="主开发人员:" VerticalAlignment="Center"/>
+					<HyperlinkButton VerticalAlignment="Center">
+						<StackPanel Orientation="Horizontal">
+							<ic:FluentIcon Icon="Link" Margin="5,2"/>
+							<TextBlock Text="Xiaowang0229" Margin="2"/>
+						</StackPanel>
+					</HyperlinkButton>
+				</StackPanel>
+
+				<TextBlock Text="依赖项:" VerticalAlignment="Center" Margin="2"/>
+				<HyperlinkButton VerticalAlignment="Center">
+					<StackPanel Orientation="Horizontal">
+						<ic:FluentIcon Icon="Link" Margin="5,2"/>
+						<TextBlock Text="Avalonia" Margin="2"/>
+					</StackPanel>
+				</HyperlinkButton>
+				<HyperlinkButton VerticalAlignment="Center">
+					<StackPanel Orientation="Horizontal">
+						<ic:FluentIcon Icon="Link" Margin="5,2"/>
+						<TextBlock Text="FluentAvaloniaUI" Margin="2"/>
+
+					</StackPanel>
+				</HyperlinkButton>
+				<HyperlinkButton VerticalAlignment="Center">
+					<StackPanel Orientation="Horizontal">
+						<ic:FluentIcon Icon="Link" Margin="5,2"/>
+						<TextBlock Text="FluentIcons.Avalonia" Margin="2"/>
+					</StackPanel>
+				</HyperlinkButton>
+				<HyperlinkButton VerticalAlignment="Center">
+					<StackPanel Orientation="Horizontal">
+						<ic:FluentIcon Icon="Link" Margin="5,2"/>
+						<TextBlock Text="LiveMarkdown.Avalonia" Margin="2"/>
+					</StackPanel>
+				</HyperlinkButton>
+				<HyperlinkButton VerticalAlignment="Center">
+					<StackPanel Orientation="Horizontal">
+						<ic:FluentIcon Icon="Link" Margin="5,2"/>
+						<TextBlock Text="Newtonsoft.Json" Margin="2"/>
+					</StackPanel>
+				</HyperlinkButton>
+			</StackPanel>
+		</StackPanel>
+	</ScrollViewer>
 </UserControl>

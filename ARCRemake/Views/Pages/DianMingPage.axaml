@@ -2,7 +2,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:ui="using:FluentAvalonia.UI.Controls"
+			 xmlns:ic="using:FluentIcons.Avalonia"
+			 Loaded="Page_Loaded"
+			 
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ARCRemake.DianMingPage">
-  Welcome to Avalonia!
+	<Grid Margin="5">
+		<TextBlock x:Name="ModeTitle" Text="示例点名" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<TextBlock x:Name="NameBlock" IsVisible="True" Text="示例名字" FontSize="48" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		<ListBox x:Name="ListDianMingBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="100" BorderBrush="Gray" BorderThickness="2" ScrollViewer.AllowAutoHide="False" ScrollViewer.VerticalScrollBarVisibility="Visible" IsVisible="False"/>
+		<Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Classes="accent">
+			<Button.Content>
+				<StackPanel Orientation="Horizontal" Margin="30,10">
+					<ic:FluentIcon Icon="Play"/>
+					<TextBlock Text="开始点名" FontSize="16" Margin="10,0" FontWeight="Bold"/>
+				</StackPanel>
+			</Button.Content>
+		</Button>
+		
+	</Grid>
 </UserControl>

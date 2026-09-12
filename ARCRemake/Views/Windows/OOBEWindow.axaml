@@ -1,9 +1,13 @@
-<Window xmlns="https://github.com/avaloniaui"
+<wnd:AppWindow xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:ic="using:FluentIcons.Avalonia"
+		xmlns:ui="using:FluentAvalonia.UI.Controls"
+		xmlns:wnd="using:FluentAvalonia.UI.Windowing"
+			   
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="ARCRemake.OOBEWindow"
-        Title="OOBEWindow">
-  Welcome to Avalonia!
-</Window>
+        Title="初始化自动点名器">
+  <ui:Frame x:Name="RootFrame"/>
+</wnd:AppWindow>

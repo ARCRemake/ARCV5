@@ -5,9 +5,10 @@
 			 xmlns:ic="using:FluentIcons.Avalonia"
 			 xmlns:ui="using:FluentAvalonia.UI.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 Loaded="Page_Loaded"
              x:Class="ARCRemake.FirstScreen">
 	<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-		<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+		<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="RootPanel">
 			<Viewbox Width="96" Height="96" HorizontalAlignment="Center">
 				<Canvas Width="24" Height="24">
 					<Ellipse Canvas.Left="8" Canvas.Top="2" Width="8" Height="8"
@@ -16,49 +17,56 @@
 						  Stroke="#c026d3" StrokeThickness="1.5" Fill="Transparent"/>
 				</Canvas>
 			</Viewbox>
-			<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Margin="10" HorizontalAlignment="Center">
-				<TextBlock Text=" 5 " FontSize="24" FontWeight="Black"/>
-				<TextBlock Text="器" FontSize="24" FontWeight="Black"/>
-				<TextBlock Text="名" FontSize="24" FontWeight="Black"/>
-				<TextBlock Text="点" FontSize="24" FontWeight="Black"/>
-				<TextBlock Text="动" FontSize="24" FontWeight="Black"/>
+			<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="10" HorizontalAlignment="Center">
 				<TextBlock Text="自" FontSize="24" FontWeight="Black"/>
+				<TextBlock Text="动" FontSize="24" FontWeight="Black"/>
+				<TextBlock Text="点" FontSize="24" FontWeight="Black"/>
+				<TextBlock Text="名" FontSize="24" FontWeight="Black"/>
+				<TextBlock Text="器" FontSize="24" FontWeight="Black"/>
+				<TextBlock Text=" 5" FontSize="24" FontWeight="Black"/>
 			</StackPanel>
-			<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Margin="10" HorizontalAlignment="Center">
-				<TextBlock Text="件" FontSize="14" />
-				<TextBlock Text="软" FontSize="14" />
-				<TextBlock Text="名" FontSize="14" />
-				<TextBlock Text="点" FontSize="14" />
-				<TextBlock Text="屏" FontSize="14" />
-				<TextBlock Text="大" FontSize="14" />
-				<TextBlock Text="室" FontSize="14" />
-				<TextBlock Text="教" FontSize="14" />
-				<TextBlock Text="的" FontSize="14" />
-				<TextBlock Text="进" FontSize="14" />
-				<TextBlock Text="先" FontSize="14" />
-				<TextBlock Text="，" FontSize="14" />
-				<TextBlock Text="观" FontSize="14" />
-				<TextBlock Text="美" FontSize="14" />
-				<TextBlock Text="，" FontSize="14" />
-				<TextBlock Text="畅" FontSize="14" />
-				<TextBlock Text="流" FontSize="14" />
-				<TextBlock Text="，" FontSize="14" />
-				<TextBlock Text="用" FontSize="14" />
+			<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="10" HorizontalAlignment="Center">
 				<TextBlock Text="易" FontSize="14" />
+				<TextBlock Text="用" FontSize="14" />
+				<TextBlock Text="，" FontSize="14" />
+				<TextBlock Text="流" FontSize="14" />
+				<TextBlock Text="畅" FontSize="14" />
+				<TextBlock Text="，" FontSize="14" />
+				<TextBlock Text="美" FontSize="14" />
+				<TextBlock Text="观" FontSize="14" />
+				<TextBlock Text="，" FontSize="14" />
+				<TextBlock Text="先" FontSize="14" />
+				<TextBlock Text="进" FontSize="14" />
+				<TextBlock Text="的" FontSize="14" />
+				<TextBlock Text="教" FontSize="14" />
+				<TextBlock Text="室" FontSize="14" />
+				<TextBlock Text="大" FontSize="14" />
+				<TextBlock Text="屏" FontSize="14" />
+				<TextBlock Text="点" FontSize="14" />
+				<TextBlock Text="名" FontSize="14" />
+				<TextBlock Text="软" FontSize="14" />
+				<TextBlock Text="件" FontSize="14" />
 			</StackPanel>
-		</StackPanel>
-		<StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" Orientation="Horizontal">
-			<CheckBox VerticalAlignment="Center">
-				<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-					<TextBlock Text="我已阅读并同意" VerticalAlignment="Center"/>
+			<Button IsVisible="False" Height="48" Width="48" ClipToBounds="True" CornerRadius="64" Classes="accent" HorizontalAlignment="Center" Margin="10" IsEnabled="False" x:Name="ContinueButton" Click="Continue_Clicked">
+				<ic:FluentIcon Icon="ArrowRight" FontSize="16"/>
+			</Button>
+
+			<Grid IsVisible="False">
+				<StackPanel Orientation="Horizontal" Margin="5" Tag="Ignore">
+					<CheckBox VerticalAlignment="Center" Click="Agree_Checked" x:Name="AgreeBox">
+						<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+							<TextBlock Text="我已阅读并同意" VerticalAlignment="Center"/>
+						</StackPanel>
+					</CheckBox>
+					<HyperlinkButton VerticalAlignment="Center" >
+						<StackPanel Orientation="Horizontal">
+							<ic:FluentIcon Icon="Link" Margin="5,2"/>
+							<TextBlock Text="自动点名器软件许可协议" Margin="0" VerticalAlignment="Center"/>
+						</StackPanel>
+					</HyperlinkButton>
 				</StackPanel>
-			</CheckBox>
-			<HyperlinkButton VerticalAlignment="Center" >
-				<StackPanel Orientation="Horizontal">
-					<ic:FluentIcon Icon="Link" Margin="5,2"/>
-					<TextBlock Text="自动点名器软件许可协议" Margin="0" VerticalAlignment="Center"/>
-				</StackPanel>
-			</HyperlinkButton>
+			</Grid>
 		</StackPanel>
+		
 	</Grid>
 </UserControl>

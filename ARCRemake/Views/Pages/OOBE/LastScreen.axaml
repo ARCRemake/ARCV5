@@ -7,9 +7,17 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ARCRemake.LastScreen">
 	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-		<TextBlock Text="恭喜！您已配置完毕，现在可以开始点名了！" FontSize="18" FontWeight="Bold"/>
-		<Button Height="64" Width="64" ClipToBounds="True" CornerRadius="64" Classes="accent" HorizontalAlignment="Center" Margin="10" >
-			<ic:FluentIcon Icon="ArrowRight" FontSize="24"/>
+		<Viewbox Width="96" Height="96" HorizontalAlignment="Center" Margin="10">
+			<Canvas Width="24" Height="24">
+				<Ellipse Canvas.Left="8" Canvas.Top="2" Width="8" Height="8"
+						 Stroke="#c026d3" StrokeThickness="1.5" Fill="Transparent"/>
+				<Path Data="M20 17.5c0 2.485 0 4.5-8 4.5s-8-2.015-8-4.5S7.582 13 12 13s8 2.015 8 4.5Z"
+					  Stroke="#c026d3" StrokeThickness="1.5" Fill="Transparent"/>
+			</Canvas>
+		</Viewbox>
+		<TextBlock Text="恭喜！您已配置完毕，现在可以开始点名了！" FontSize="20" FontWeight="Bold"/>
+		<Button Height="48" Width="48" ClipToBounds="True" CornerRadius="64" Classes="accent" HorizontalAlignment="Center" Margin="10" Click="Button_Click">
+			<ic:FluentIcon Icon="ArrowRight" FontSize="16"/>
 		</Button>
 	</StackPanel>
 </UserControl>

@@ -2,7 +2,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:ic="using:FluentIcons.Avalonia"
+			 xmlns:ui="using:FluentAvalonia.UI.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ARCRemake.AddNameList">
-  Welcome to Avalonia!
+	<Grid Margin="10">
+		
+			<TextBlock x:Name="ModeTitle" Text="创建名单" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+			<DockPanel Margin="5,37,5,70" LastChildFill="True" x:Name="RootPanel" >
+				<TextBlock DockPanel.Dock="Top" Text="在最后，请您创建用于点名的名单。"/>
+				<Grid DockPanel.Dock="Top" Margin="0,5">
+					<TextBlock Text="名单名称：" VerticalAlignment="Center" FontWeight="Bold"/>
+					<TextBox HorizontalAlignment="Stretch" Margin="70,0,0,0"/>
+				</Grid>
+				<TextBlock DockPanel.Dock="Top" Text="名单内容：" VerticalAlignment="Center" FontWeight="Bold"/>
+				<TextBox DockPanel.Dock="Top" AcceptsReturn="True"
+						TextWrapping="Wrap"/>
+			</DockPanel>
+		
+		
+		<Button Classes="accent" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15" Click="Button_Click">
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text=" " Margin="2"/>
+				<ic:FluentIcon Icon="ArrowRight" Margin="2"/>
+				<TextBlock Text="  继续  " Margin="2"/>
+			</StackPanel>
+		</Button>
+	</Grid>
 </UserControl>

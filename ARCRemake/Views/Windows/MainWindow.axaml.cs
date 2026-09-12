@@ -11,6 +11,7 @@ namespace ARCRemake
         public MainWindow()
         {
             InitializeComponent();
+            RootClasses.MainWindow = this;
             RootNavi.SelectedItem = NaviItem0;
         }
 

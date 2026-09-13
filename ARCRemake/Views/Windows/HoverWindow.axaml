@@ -7,6 +7,8 @@
 		Width="64" Height="64" MinHeight="64" MinWidth="64" MaxHeight="64" MaxWidth="64" 
 		ShowInTaskbar="False"
 		SystemDecorations="None"
+		Closing="Window_Closing"
+		Opened="Window_Opened"
 		Topmost="True"
         Background="Transparent"
         TransparencyLevelHint="Transparent"

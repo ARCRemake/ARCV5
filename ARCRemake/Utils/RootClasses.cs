@@ -1,4 +1,5 @@
-﻿using FluentAvalonia.UI.Windowing;
+﻿using Avalonia;
+using FluentAvalonia.UI.Windowing;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +13,8 @@ namespace ARCRemake.Utils
         public static MainWindow MainWindow;
         public static OOBEWindow OOBEWindow;
         public static HoverWindow HoverWindow;
+        
+
 
     }
 

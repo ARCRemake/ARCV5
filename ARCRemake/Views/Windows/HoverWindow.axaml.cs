@@ -4,6 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using System;
 
 namespace ARCRemake;
 
@@ -27,15 +28,29 @@ public partial class HoverWindow : Window
         }
     }
 
-    private void OnPointerEntered(object? sender, PointerEventArgs e)
+    private void OnPointerEntered(object s, PointerEventArgs e)
     {
         path0.Fill = new SolidColorBrush(Color.Parse("#C026D3"));
         path1.Fill = new SolidColorBrush(Color.Parse("#C026D3"));
     }
 
-    private void OnPointerExited(object? sender, PointerEventArgs e)
+    private void OnPointerExited(object s, PointerEventArgs e)
     {
         path0.Fill = new SolidColorBrush(Color.Parse("#B9B9B9"));
         path1.Fill = new SolidColorBrush(Color.Parse("#404040"));
+    }
+
+    private void Window_Closing(object s,WindowClosingEventArgs e)
+    {
+        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        a.HoverWindowX = this.Position.X;
+        a.HoverWindowY = this.Position.Y;
+        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
+    }
+
+    private void Window_Opened(object s,EventArgs e)
+    {
+        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        this.Position = new PixelPoint(a.HoverWindowX, a.HoverWindowY);
     }
 }

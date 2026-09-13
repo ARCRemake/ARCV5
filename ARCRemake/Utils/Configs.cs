@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Avalonia;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -22,6 +23,8 @@ namespace ARCRemake.Utils
         public required int BatchCounts { get; set; }
         public required bool StartUpCheckUpdate { get; set; }
         public required bool UsingHoverBall { get; set; }
+        public required int HoverWindowX;
+        public required int HoverWindowY;
     }
 
     public class UpdateConfig
@@ -45,6 +48,8 @@ namespace ARCRemake.Utils
                 BatchCounts = 3,
                 StartUpCheckUpdate = true,
                 UsingHoverBall = true,
+                HoverWindowX = 100,
+                HoverWindowY = 100
             };
         }
     }

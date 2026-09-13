@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:ui="using:FluentAvalonia.UI.Controls"
 			 xmlns:ic="using:FluentIcons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 Loaded="Page_Loaded"
@@ -11,38 +12,156 @@
 	<StackPanel Margin="5">
 		<TextBlock x:Name="ModeTitle" Text="点名设置" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 		<StackPanel x:Name="RootPanel">
-			<Grid HorizontalAlignment="Stretch"  Margin="5">
-				<TextBlock Text="名单选择:" VerticalAlignment="Center"/>
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-					<Button Margin="5,0" VerticalAlignment="Center" >
-						<ic:FluentIcon Icon="Add"/>
-					</Button>
-					<Button Margin="0,0,5,0" VerticalAlignment="Center" >
-						<ic:FluentIcon Icon="Edit"/>
-					</Button>
-					<Button  Foreground="Red" VerticalAlignment="Center">
-						<ic:FluentIcon Icon="Delete"/>
-					</Button>
-				</StackPanel>
-				<ComboBox x:Name="NameListBox" HorizontalAlignment="Stretch" Margin="70,0,150,0" VerticalAlignment="Center" />
-				
-			</Grid>
-			<StackPanel Orientation="Horizontal" Margin="5">
-				<TextBlock Text="常规点名间隔时长(ms):" VerticalAlignment="Center"/>
-				<NumericUpDown SizeChanged="CGDM_TextChanged" x:Name="CGDM"/>
-			</StackPanel>
-			<StackPanel Orientation="Horizontal" Margin="5">
-				<TextBlock Text="定时点名时长(s):" VerticalAlignment="Center"/>
-				<NumericUpDown SizeChanged="DSDM_TextChanged" x:Name="DSDM"/>
-			</StackPanel>
-			<StackPanel Orientation="Horizontal" Margin="5">
-				<TextBlock Text="批量点名个数:" VerticalAlignment="Center"/>
-				<NumericUpDown SizeChanged="PLDM_TextChanged" x:Name="PLDM"/>
-			</StackPanel>
-			<StackPanel Margin="5,0" Orientation="Horizontal">
-				<TextBlock Text="恢复默认配置项：" VerticalAlignment="Center"/>
-				<Button Content="   恢复默认   " Foreground="Red" Click="Recovery_Click"/>
-			</StackPanel>
+			<ui:SettingsExpander HorizontalAlignment="Stretch" Margin="5">
+				<ui:SettingsExpander.Header>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+						<ic:FluentIcon Icon="List" Height="32" Width="32" FontSize="28"/>
+						<StackPanel VerticalAlignment="Center" Margin="5.0">
+							<TextBlock FontSize="16" FontWeight="Bold" Text="名单选择"/>
+							<TextBlock Text="选择用于常规点名，立即点名等点名操作的名单"/>
+						</StackPanel>
+					</StackPanel>
+				</ui:SettingsExpander.Header>
+				<ui:SettingsExpander.Items>
+					<ui:SettingsExpanderItem HorizontalAlignment="Stretch">
+						<Grid HorizontalAlignment="Stretch"  Margin="5">
+							<TextBlock Text="名单选择:" VerticalAlignment="Center"/>
+							
+							<ComboBox x:Name="NameListBox" HorizontalAlignment="Stretch" Margin="70,0,0,0" VerticalAlignment="Center" />
+
+						</Grid>
+					</ui:SettingsExpanderItem>
+					<ui:SettingsExpanderItem HorizontalAlignment="Stretch">
+						<Grid HorizontalAlignment="Stretch"  Margin="5">
+							<TextBlock Text="名单操作:" VerticalAlignment="Center"/>
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+								<Button Margin="5,0" VerticalAlignment="Center" >
+									<StackPanel Orientation="Horizontal">
+										<ic:FluentIcon Icon="Add"/>
+										<TextBlock VerticalAlignment="Center" Text="添加名单"/> 
+									</StackPanel>
+								</Button>
+								<Button Margin="0,0,5,0" VerticalAlignment="Center" >
+									<StackPanel Orientation="Horizontal">
+										<ic:FluentIcon Icon="Edit"/>
+										<TextBlock VerticalAlignment="Center" Text="编辑名单"/>
+									</StackPanel>
+								</Button>
+								<Button  Foreground="Red" VerticalAlignment="Center">
+									<StackPanel Orientation="Horizontal">
+										<ic:FluentIcon Icon="Delete"/>
+										<TextBlock VerticalAlignment="Center" Text="删除名单" Foreground="Red"/>
+									</StackPanel>
+								</Button>
+							</StackPanel>
+						</Grid>
+					</ui:SettingsExpanderItem>
+				</ui:SettingsExpander.Items>
+			</ui:SettingsExpander>
+			<ui:SettingsExpander HorizontalAlignment="Stretch" Margin="5">
+				<ui:SettingsExpander.Header>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+						<ic:FluentIcon Icon="Timer" Height="32" Width="32" FontSize="28"/>
+						<StackPanel VerticalAlignment="Center" Margin="5.0">
+							<TextBlock FontSize="16" FontWeight="Bold" Text="点名设置"/>
+							<TextBlock Text="调整常规点名的间隔时间，定时点名的时长等"/>
+						</StackPanel>
+					</StackPanel>
+				</ui:SettingsExpander.Header>
+				<ui:SettingsExpander.Items>
+					<ui:SettingsExpanderItem>
+						<Grid Margin="5">
+							<TextBlock Text="常规点名间隔时长(ms):" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+							<NumericUpDown SizeChanged="CGDM_TextChanged" x:Name="CGDM" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+						</Grid>
+						
+					</ui:SettingsExpanderItem>
+					<ui:SettingsExpanderItem>
+						<Grid Margin="5">
+							<TextBlock Text="定时点名时长(s):" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+							<NumericUpDown SizeChanged="DSDM_TextChanged" x:Name="DSDM" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+						</Grid>
+						
+					</ui:SettingsExpanderItem>
+					<ui:SettingsExpanderItem>
+						<Grid Margin="5">
+							<TextBlock Text="批量点名个数:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+							<NumericUpDown SizeChanged="PLDM_TextChanged" x:Name="PLDM" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+						</Grid>
+					</ui:SettingsExpanderItem>
+				</ui:SettingsExpander.Items>
+			</ui:SettingsExpander>
+			<ui:SettingsExpander HorizontalAlignment="Stretch" Margin="5">
+				<ui:SettingsExpander.Header>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+						<ic:FluentIcon Icon="Document" Height="32" Width="32" FontSize="28"/>
+						<StackPanel VerticalAlignment="Center" Margin="5.0">
+							<TextBlock FontSize="16" FontWeight="Bold" Text="配置文件设置"/>
+							<TextBlock Text="导入导出配置，或者恢复配置到初始模式"/>
+						</StackPanel>
+					</StackPanel>
+				</ui:SettingsExpander.Header>
+				<ui:SettingsExpander.Items>
+					<ui:SettingsExpanderItem>
+						<Grid Margin="5">
+							<TextBlock Text="配置导入导出：" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+							<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+								<Button Margin="5,0" VerticalAlignment="Center" >
+									<StackPanel Orientation="Horizontal">
+										<ic:FluentIcon Icon="Save"/>
+										<TextBlock VerticalAlignment="Center" Text="导出配置文件"/>
+									</StackPanel>
+								</Button>
+								<Button Margin="5,0" VerticalAlignment="Center" >
+									<StackPanel Orientation="Horizontal">
+										<ic:FluentIcon Icon="DocumentAdd"/>
+										<TextBlock VerticalAlignment="Center" Text="导入配置文件"/>
+									</StackPanel>
+								</Button>
+							</StackPanel>
+						</Grid>
+					</ui:SettingsExpanderItem>
+					<ui:SettingsExpanderItem>
+						<Grid Margin="5">
+							<TextBlock Text="恢复默认配置：" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+							<Button Content="   恢复默认   " Foreground="Red" Click="Recovery_Click" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+						</Grid>
+					</ui:SettingsExpanderItem>
+				</ui:SettingsExpander.Items>
+			</ui:SettingsExpander>
+			<ui:SettingsExpander HorizontalAlignment="Stretch" Margin="5" IsEnabled="False">
+				<ui:SettingsExpander.Header>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+						<ic:FluentIcon Icon="PaintBrush" Height="32" Width="32" FontSize="28"/>
+						<StackPanel VerticalAlignment="Center" Margin="5.0">
+							<TextBlock FontSize="16" FontWeight="Bold" Text="个性化"/>
+							<TextBlock Text="此设置项暂不开放"/>
+						</StackPanel>
+					</StackPanel>
+				</ui:SettingsExpander.Header>
+			</ui:SettingsExpander>
+			<ui:SettingsExpander HorizontalAlignment="Stretch" Margin="5">
+				<ui:SettingsExpander.Header>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+						<ic:FluentIcon Icon="Settings" Height="32" Width="32" FontSize="28"/>
+						<StackPanel VerticalAlignment="Center" Margin="5.0">
+							<TextBlock FontSize="16" FontWeight="Bold" Text="其他设置"/>
+							<TextBlock Text="更改程序的杂项设置"/>
+						</StackPanel>
+					</StackPanel>
+				</ui:SettingsExpander.Header>
+				<ui:SettingsExpander.Items>
+					<ui:SettingsExpanderItem>
+						<Grid Margin="5">
+							<TextBlock Text="程序启动时检测更新：" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+							<ToggleSwitch VerticalAlignment="Center" HorizontalAlignment="Right"/>
+						</Grid>
+					</ui:SettingsExpanderItem>
+				</ui:SettingsExpander.Items>
+			</ui:SettingsExpander>
+			
+			
+			
 		</StackPanel>
 	</StackPanel>
 		</ScrollViewer>

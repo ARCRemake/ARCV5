@@ -19,5 +19,6 @@
 		<Button Height="48" Width="48" ClipToBounds="True" CornerRadius="64" Classes="accent" HorizontalAlignment="Center" Margin="10" Click="Button_Click">
 			<ic:FluentIcon Icon="ArrowRight" FontSize="16"/>
 		</Button>
+		
 	</StackPanel>
 </UserControl>

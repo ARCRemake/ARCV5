@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,9 +47,14 @@ namespace ARCRemake.Utils
                         {
                             if(GetSystem() == "win-x64")
                             {
+                                if(File.Exists($"{Path.GetTempPath}\\UpdateServices-winx64.exe"))
+                                {
+                                    File.Delete($"{Path.GetTempPath}\\UpdateServices-winx64.exe");
+                                }
+                                File.Copy($"{Environment.CurrentDirectory}\\UpdateServices-winx64.exe", $"{Path.GetTempPath}\\UpdateServices-winx64.exe");
                                 var m = new ProcessStartInfo
                                 {
-                                    WorkingDirectory = Environment.CurrentDirectory,
+                                    WorkingDirectory = Path.GetTempPath(),
                                     FileName = "UpdateServices-winx64.exe",
                                 };
                                 m.ArgumentList.Add($"{d.LatestLink}");
@@ -57,9 +63,14 @@ namespace ARCRemake.Utils
                             }
                             else if (GetSystem() == "win-x86")
                             {
+                                if (File.Exists($"{Path.GetTempPath}\\UpdateServices-winx86.exe"))
+                                {
+                                    File.Delete($"{Path.GetTempPath}\\UpdateServices-winx86.exe");
+                                }
+                                File.Copy($"{Environment.CurrentDirectory}\\UpdateServices-winx86.exe", $"{Path.GetTempPath}\\UpdateServices-winx86.exe");
                                 var m = new ProcessStartInfo
                                 {
-                                    WorkingDirectory = Environment.CurrentDirectory,
+                                    WorkingDirectory = Path.GetTempPath(),
                                     FileName = "UpdateServices-winx86.exe",
                                 };
                                 m.ArgumentList.Add($"{d.LatestLink}");
@@ -68,9 +79,14 @@ namespace ARCRemake.Utils
                             }
                             else if (GetSystem() == "linux-arm64")
                             {
+                                if (File.Exists($"{Path.GetTempPath}\\UpdateServices-linuxarm64"))
+                                {
+                                    File.Delete($"{Path.GetTempPath}\\UpdateServices-linuxarm64");
+                                }
+                                File.Copy($"{Environment.CurrentDirectory}\\UpdateServices-linuxarm64", $"{Path.GetTempPath}\\UpdateServices-linuxarm64");
                                 var m = new ProcessStartInfo
                                 {
-                                    WorkingDirectory = Environment.CurrentDirectory,
+                                    WorkingDirectory = Path.GetTempPath(),
                                     FileName = "UpdateServices-linuxarm64",
                                 };
                                 m.ArgumentList.Add($"{d.LatestLink}");
@@ -79,9 +95,14 @@ namespace ARCRemake.Utils
                             }
                             else if (GetSystem() == "linux-x64")
                             {
+                                if (File.Exists($"{Path.GetTempPath}\\UpdateServices-linuxx64"))
+                                {
+                                    File.Delete($"{Path.GetTempPath}\\UpdateServices-linuxx64");
+                                }
+                                File.Copy($"{Environment.CurrentDirectory}\\UpdateServices-linuxx64", $"{Path.GetTempPath}\\UpdateServices-linuxx64");
                                 var m = new ProcessStartInfo
                                 {
-                                    WorkingDirectory = Environment.CurrentDirectory,
+                                    WorkingDirectory = Path.GetTempPath(),
                                     FileName = "UpdateServices-linuxx64",
                                 };
                                 m.ArgumentList.Add($"{d.LatestLink}");

@@ -1,8 +1,13 @@
 using ARCRemake.Utils;
+using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Interactivity;
 using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Windowing;
+using System;
+using System.Linq;
 
 namespace ARCRemake
 {
@@ -15,7 +20,48 @@ namespace ARCRemake
             RootNavi.SelectedItem = NaviItem0;
         }
 
-        public void RootNavi_SelectionChanged(object s,NavigationViewSelectionChangedEventArgs e)
+        private void Window_Loaded(object s,RoutedEventArgs e)
+        {
+            if(JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json").StartUpCheckUpdate)
+            {
+                UpdateServices.CheckUpdateAsync(true);
+            }
+            if (JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json").UsingHoverBall == true)
+            {
+                if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                {
+                    var existing = desktop.Windows
+                        .OfType<HoverWindow>()
+                        .FirstOrDefault(w => w.IsVisible);
+
+                    if (existing == null)
+                    {
+                        RootClasses.HoverWindow = new HoverWindow();
+                        RootClasses.HoverWindow.Show();
+                    }
+                }
+
+
+            }
+        }
+
+        private void Window_Closing(object s,WindowClosingEventArgs e)
+        {
+            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                var existing = desktop.Windows
+                    .OfType<HoverWindow>()
+                    .FirstOrDefault(w => w.IsVisible);
+
+                if (existing != null)
+                {
+
+                    RootClasses.HoverWindow.Close();
+                }
+            }
+        }
+
+        private void RootNavi_SelectionChanged(object s,NavigationViewSelectionChangedEventArgs e)
         {
             if(RootNavi.SelectedItem == NaviItem0)
             {

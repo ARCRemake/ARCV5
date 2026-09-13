@@ -6,6 +6,8 @@
 		xmlns:ui="using:FluentAvalonia.UI.Controls"
 		xmlns:wnd="using:FluentAvalonia.UI.Windowing"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			   Loaded="Window_Loaded"
+			   Closing="Window_Closing"
         x:Class="ARCRemake.MainWindow"
         Title="自动点名器">
 	<ui:NavigationView  x:Name="RootNavi" SelectionChanged="RootNavi_SelectionChanged" ExpandedModeThresholdWidth="99999" IsBackButtonVisible="False" IsBackEnabled="False" IsSettingsVisible="False">

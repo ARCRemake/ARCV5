@@ -47,14 +47,17 @@ namespace ARCRemake.Utils
                     }
                     else
                     {
-                        var dlg = new ContentDialog
+                        if(!Silent)
                         {
-                            Title = "提示",
-                            Content = "当前版本已经是最新版，无需更新。",
-                            DefaultButton = ContentDialogButton.Primary,
-                            PrimaryButtonText = "确定"
-                        };
-                        await dlg.ShowAsync();
+                            var dlg = new ContentDialog
+                            {
+                                Title = "提示",
+                                Content = "当前版本已经是最新版，无需更新。",
+                                DefaultButton = ContentDialogButton.Primary,
+                                PrimaryButtonText = "确定"
+                            };
+                            await dlg.ShowAsync();
+                        }
                     }
                 }
             }

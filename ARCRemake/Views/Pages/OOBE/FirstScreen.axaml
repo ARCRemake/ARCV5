@@ -58,7 +58,7 @@
 							<TextBlock Text="我已阅读并同意" VerticalAlignment="Center"/>
 						</StackPanel>
 					</CheckBox>
-					<HyperlinkButton VerticalAlignment="Center" >
+					<HyperlinkButton VerticalAlignment="Center" Click="EULA_Click">
 						<StackPanel Orientation="Horizontal">
 							<ic:FluentIcon Icon="Link" Margin="5,2"/>
 							<TextBlock Text="GNU Public License version 3.0 许可协议" Margin="0" VerticalAlignment="Center"/>

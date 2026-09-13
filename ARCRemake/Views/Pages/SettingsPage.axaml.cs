@@ -7,6 +7,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using Avalonia.Platform.Storage;
 using Avalonia.Styling;
 using FluentAvalonia.Core;
 using FluentAvalonia.UI.Controls;
@@ -22,7 +23,7 @@ namespace ARCRemake;
 
 public partial class SettingsPage : UserControl
 {
-    
+
     public SettingsPage()
     {
         InitializeComponent();
@@ -39,7 +40,7 @@ public partial class SettingsPage : UserControl
 
     }
 
-    private async void Page_Loaded(object s,RoutedEventArgs e)
+    private async void Page_Loaded(object s, RoutedEventArgs e)
     {
         await StartSPAnimation(RootPanel);
         foreach (var a in Directory.EnumerateFiles($"{Environment.CurrentDirectory}\\NameLists", "*.json"))
@@ -52,7 +53,7 @@ public partial class SettingsPage : UserControl
                     Content = $"{b.ListName}（{a}）",
                     Tag = $"{a}"
                 };
-                
+
                 NameListBox.Items.Add(ci);
             }
             catch
@@ -63,11 +64,11 @@ public partial class SettingsPage : UserControl
         }
         var a2 = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
         var a3 = new ComboBoxItem { };
-        foreach(var a4 in NameListBox.Items)
+        foreach (var a4 in NameListBox.Items)
         {
-            if(a4 is ComboBoxItem a5)
+            if (a4 is ComboBoxItem a5)
             {
-                if(Path.GetFileName((string)a5.Tag) == Path.GetFileName(a2.CurrentNameListPath))
+                if (Path.GetFileName((string)a5.Tag) == Path.GetFileName(a2.CurrentNameListPath))
                 {
                     NameListBox.SelectedItem = a5;
                     break;
@@ -75,8 +76,8 @@ public partial class SettingsPage : UserControl
             }
         }
 
-        
- 
+
+
         CGDM.Value = a2.IntervalTick;
         DSDM.Value = a2.ScheduledSeconds;
         PLDM.Value = a2.BatchCounts;
@@ -84,12 +85,12 @@ public partial class SettingsPage : UserControl
         StartUpCheckUpdate.IsChecked = a2.StartUpCheckUpdate;
     }
 
-    private void NameListBox_SelectionChanged(object s,RoutedEventArgs e)
+    private void NameListBox_SelectionChanged(object s, RoutedEventArgs e)
     {
-        
+
         var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
         a.CurrentNameListPath = (string)((ComboBoxItem)NameListBox.SelectedItem).Tag;
-        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json",a);
+        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
     }
 
     private void Page_UnLoaded(object s, RoutedEventArgs e)
@@ -101,7 +102,7 @@ public partial class SettingsPage : UserControl
         }
         var a2 = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
         NameListBox.Items.Clear();
-        
+
         CGDM.Value = a2.IntervalTick;
         DSDM.Value = a2.ScheduledSeconds;
         PLDM.Value = a2.BatchCounts;
@@ -112,7 +113,7 @@ public partial class SettingsPage : UserControl
     public async Task StartSPAnimation(StackPanel sp)
     {
 
-        
+
         foreach (var animation in sp.Children)
         {
 
@@ -138,7 +139,7 @@ public partial class SettingsPage : UserControl
 
     }
 
-    private async void Recovery_Click(object s,RoutedEventArgs e)
+    private async void Recovery_Click(object s, RoutedEventArgs e)
     {
         var dlg = new ContentDialog
         {
@@ -148,7 +149,7 @@ public partial class SettingsPage : UserControl
             SecondaryButtonText = "取消",
             DefaultButton = ContentDialogButton.Primary
         };
-        if(await dlg.ShowAsync() == ContentDialogResult.Primary)
+        if (await dlg.ShowAsync() == ContentDialogResult.Primary)
         {
             JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", ConfigHelper.InitConfig());
             Directory.Delete($"{Environment.CurrentDirectory}/NameLists", true);
@@ -176,14 +177,14 @@ public partial class SettingsPage : UserControl
                 Environment.Exit(0);
             }
         }
-        
+
     }
 
-    private void CGDM_TextChanged(object s,RoutedEventArgs e)
+    private void CGDM_TextChanged(object s, RoutedEventArgs e)
     {
         var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
         a.IntervalTick = (int)CGDM.Value;
-        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json",a);
+        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
     }
 
     private void DSDM_TextChanged(object s, RoutedEventArgs e)
@@ -203,16 +204,14 @@ public partial class SettingsPage : UserControl
     private void AddNameList_Click(object s, RoutedEventArgs e)
     {
         var win = new NameListWindow();
-        win.Show();
-        RootClasses.MainWindow.Close();
+        win.ShowDialog(RootClasses.MainWindow);
     }
 
     private void ModifyNameList_Click(object s, RoutedEventArgs e)
     {
         var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
         var win = new NameListWindow(a.CurrentNameListPath);
-        win.Show();
-        RootClasses.MainWindow.Close();
+        win.ShowDialog(RootClasses.MainWindow);
     }
 
     private async void DelNameList_Click(object s, RoutedEventArgs e)
@@ -222,18 +221,17 @@ public partial class SettingsPage : UserControl
         {
             Title = "警告",
             Content = $"是否确认删除名单“{a.CurrentNameListPath}”？它将会永久删除！(真的很久！)",
-            PrimaryButtonText="确定",
-            SecondaryButtonText="取消",
+            PrimaryButtonText = "确定",
+            SecondaryButtonText = "取消",
             DefaultButton = ContentDialogButton.Primary
         };
-        if(await dlg.ShowAsync() == ContentDialogResult.Primary)
+        if (await dlg.ShowAsync() == ContentDialogResult.Primary)
         {
             File.Delete(a.CurrentNameListPath);
-            if(Directory.EnumerateFiles($"{Environment.CurrentDirectory}/NameLists").Count() == 0)
+            if (Directory.EnumerateFiles($"{Environment.CurrentDirectory}/NameLists").Count() == 0)
             {
                 var win = new NameListWindow();
-                win.Show();
-                RootClasses.MainWindow.Close();
+                await win.ShowDialog(RootClasses.MainWindow);
             }
             else
             {
@@ -266,8 +264,31 @@ public partial class SettingsPage : UserControl
 
     }
 
-    private void UsingHoverBall_Click(object s,RoutedEventArgs e)
+    private void UsingHoverBall_Click(object s, RoutedEventArgs e)
     {
+        
+
+        if (UsingHoverBall.IsChecked == true)
+        {
+            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                var existing = desktop.Windows
+                    .OfType<HoverWindow>()
+                    .FirstOrDefault(w => w.IsVisible);
+
+                if (existing == null)
+                {
+                    RootClasses.HoverWindow = new HoverWindow();
+                    RootClasses.HoverWindow.Show();
+                }
+            }
+            
+                
+        }
+        else
+        {
+            RootClasses.HoverWindow.Close();
+        }
         var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
         a.UsingHoverBall = UsingHoverBall.IsChecked ?? true;
         JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
@@ -280,4 +301,162 @@ public partial class SettingsPage : UserControl
         JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
     }
 
+    private async void Import_Click(object s, RoutedEventArgs e)
+    {
+        var topLevel = TopLevel.GetTopLevel(this);
+        var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+        {
+            Title = "打开新配置项",
+            AllowMultiple = false,
+            FileTypeFilter = new[] {
+            new FilePickerFileType("配置文件") { Patterns = new[] { "*.json" } }
+        }
+        });
+        await using var stream = await files[0].OpenReadAsync();
+        using var streamReader = new StreamReader(stream);
+        var fileContent = await streamReader.ReadToEndAsync();
+        try
+        {
+            var newcfg = JsonServices.ReadJson<AppConfig>(fileContent);
+            var dlg = new ContentDialog
+            {
+                Title = "提示",
+                Content = $"是否要覆盖到当前配置文件？",
+                PrimaryButtonText = "确定",
+                SecondaryButtonText = "取消",
+                DefaultButton = ContentDialogButton.Primary
+            };
+            if (await dlg.ShowAsync() == ContentDialogResult.Primary)
+            {
+                JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", newcfg);
+                var dl2g = new ContentDialog
+                {
+                    Title = "提示",
+                    Content = $"导入配置成功。需要重启以应用配置项。",
+                    PrimaryButtonText = "确定",
+                    DefaultButton = ContentDialogButton.Primary
+                };
+                await dl2g.ShowAsync();
+                var exePath = Environment.ProcessPath
+               ?? throw new InvalidOperationException("无法获取当前可执行文件路径。");
+
+                var psi = new ProcessStartInfo
+                {
+                    FileName = exePath,
+                    UseShellExecute = false,
+                    WorkingDirectory = AppContext.BaseDirectory,
+                };
+
+
+
+                Process.Start(psi);
+
+                if (Application.Current?.ApplicationLifetime
+                    is IClassicDesktopStyleApplicationLifetime desktop)
+                {
+                    desktop.Shutdown();
+                }
+                else
+                {
+                    Environment.Exit(0);
+                }
+            }
+        }
+        catch
+        {
+            var dlg = new ContentDialog
+            {
+                Title = "警告",
+                Content = $"配置项不合法，请重新选择。",
+                PrimaryButtonText = "确定",
+                SecondaryButtonText = "取消",
+                DefaultButton = ContentDialogButton.Primary
+            };
+            await dlg.ShowAsync();
+        }
+
+
+    }
+
+    private async void Export_Click(object s, RoutedEventArgs e)
+    {
+        var topLevel = TopLevel.GetTopLevel(this);
+
+        var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+        {
+            Title = "保存配置文件",
+            FileTypeChoices = new[] {
+            new FilePickerFileType("配置文件") { Patterns = new[] { "*.json" } }
+        }
+        });
+
+        if (file is not null)
+        {
+            JsonServices.WriteJson<AppConfig>(file.TryGetLocalPath(), JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json"));
+            var dlg = new ContentDialog
+            {
+                Title = "提示",
+                Content = $"导出配置成功。",
+                PrimaryButtonText = "确定",
+                DefaultButton = ContentDialogButton.Primary
+            };
+            await dlg.ShowAsync();
+        }
+    }
+    private async void ImportNL_Click(object s, RoutedEventArgs e)
+    {
+        var topLevel = TopLevel.GetTopLevel(this);
+        var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+        {
+            Title = "导入名单配置文件",
+            AllowMultiple = false,
+            FileTypeFilter = new[] {
+            new FilePickerFileType("名单文件") { Patterns = new[] { "*.json" } }
+        }
+        });
+        try
+        {
+            var k = JsonServices.ReadJson<NameListConfig>(files[0].TryGetLocalPath());
+            File.Copy(files[0].TryGetLocalPath(), $"{Environment.CurrentDirectory}/NameLists/{files[0].Name}");
+            var dlg = new ContentDialog
+            {
+                Title = "提示",
+                Content = $"导入名单成功。",
+                PrimaryButtonText = "确定",
+                DefaultButton = ContentDialogButton.Primary
+            };
+            await dlg.ShowAsync();
+            var ci = new ComboBoxItem
+            {
+                Content = $"{k.ListName}（{files[0].TryGetLocalPath()}）",
+                Tag = $"{files[0].TryGetLocalPath()}"
+            };
+
+            NameListBox.Items.Add(ci);
+        }
+        catch
+        {
+            var dlg = new ContentDialog
+            {
+                Title = "警告",
+                Content = $"配置项不合法，请重新选择。",
+                PrimaryButtonText = "确定",
+                SecondaryButtonText = "取消",
+                DefaultButton = ContentDialogButton.Primary
+            };
+            await dlg.ShowAsync();
+        }
+
+    }
+
+    private void ExportNL_Click(object s, RoutedEventArgs e)
+    {
+        Process.Start(new ProcessStartInfo
+        {
+            FileName = $"{Environment.CurrentDirectory}/NameLists",
+            UseShellExecute = true,
+        });
+    }
+
+    
 }

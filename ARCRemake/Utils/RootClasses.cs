@@ -11,6 +11,7 @@ namespace ARCRemake.Utils
         public static string DianMingMode = "常规点名";
         public static MainWindow MainWindow;
         public static OOBEWindow OOBEWindow;
+        public static HoverWindow HoverWindow;
 
     }
 

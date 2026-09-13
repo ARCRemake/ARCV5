@@ -6,7 +6,11 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using Avalonia.Threading;
+using FluentAvalonia.UI.Controls;
+using LiveMarkdown.Avalonia;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ARCRemake;
@@ -81,5 +85,46 @@ public partial class FirstScreen : UserControl
 
         }
 
+    }
+
+    private async void EULA_Click(object s, RoutedEventArgs e)
+    {
+        var k = new ObservableStringBuilder();
+        k.Append("正在加载许可协议…");
+        var dlg = new ContentDialog
+        {
+            Title = "许可协议",
+            Content = new MarkdownRenderer
+            {
+                MarkdownBuilder = k
+            },
+            PrimaryButtonText = "确定",
+            DefaultButton = ContentDialogButton.Primary
+        };
+        var showTask = dlg.ShowAsync();
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                using var client = new HttpClient();
+                var tex = await client.GetStringAsync(
+                    "https://raw.giteeusercontent.com/Wang120229/ARCRemake.UpdateService/raw/master/LICENSE.md");
+
+                await Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    k.Clear();
+                    k.Append(tex);
+                });
+            }
+            catch (Exception ex)
+            {
+                await Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    k.Clear();
+                    k.Append($"加载失败：{ex.Message}");
+                });
+            }
+        });
+        await showTask;
     }
 }

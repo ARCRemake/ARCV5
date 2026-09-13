@@ -6,7 +6,12 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using Avalonia.Threading;
+using FluentAvalonia.UI.Controls;
+using LiveMarkdown.Avalonia;
 using System;
+using System.Diagnostics;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ARCRemake;
@@ -74,5 +79,65 @@ public partial class AboutPage : UserControl
         CheckUpdate.IsEnabled = false;
         await UpdateServices.CheckUpdateAsync(false);
         CheckUpdate.IsEnabled = true;
+    }
+
+    private async void EULA_Click(object s, RoutedEventArgs e)
+    {
+        var k = new ObservableStringBuilder();
+        k.Append("正在加载许可协议…");
+        var dlg = new ContentDialog
+        {
+            Title = "许可协议",
+            Content = new MarkdownRenderer
+            {
+                MarkdownBuilder = k
+            },
+            PrimaryButtonText = "确定",
+            DefaultButton = ContentDialogButton.Primary
+        };
+        var showTask = dlg.ShowAsync();
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                using var client = new HttpClient();
+                var tex = await client.GetStringAsync(
+                    "https://raw.giteeusercontent.com/Wang120229/ARCRemake.UpdateService/raw/master/LICENSE.md");
+
+                await Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    k.Clear();
+                    k.Append(tex);
+                });
+            }
+            catch (Exception ex)
+            {
+                await Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    k.Clear();
+                    k.Append($"加载失败：{ex.Message}");
+                });
+            }
+        });
+        await showTask;
+    }
+
+    private void BUGReport_Click(object s, RoutedEventArgs e)
+    {
+        Process.Start(new ProcessStartInfo
+        {
+            FileName = "https://github.com/arcremake/arcv5/issues/new",
+            UseShellExecute = true
+        });
+    }
+
+    private void Link_Click(object s, RoutedEventArgs e)
+    {
+        
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = ((string)(((HyperlinkButton)s).Tag)),
+                UseShellExecute = true
+            });
     }
 }

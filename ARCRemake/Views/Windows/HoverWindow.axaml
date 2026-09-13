@@ -1,0 +1,28 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:ARCRemake"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		Width="64" Height="64" MinHeight="64" MinWidth="64" MaxHeight="64" MaxWidth="64" 
+		ShowInTaskbar="False"
+		SystemDecorations="None"
+		Topmost="True"
+        Background="Transparent"
+        TransparencyLevelHint="Transparent"
+        x:Class="ARCRemake.HoverWindow"
+		PointerPressed="OnWindowPointerPressed"
+		PointerEntered="OnPointerEntered"
+		PointerExited="OnPointerExited"
+        Title="HoverWindow">
+	<Viewbox  Width="64" Height="64" Stretch="Uniform" >
+		<Canvas Width="24" Height="24">
+			<Path x:Name="path0" Fill="#B9B9B9"
+				  Opacity="0.5"
+				  Data="M22 12 C22 17.523 17.523 22 12 22 C6.477 22 2 17.523 2 12 C2 6.477 6.477 2 12 2 C17.523 2 22 6.477 22 12 Z" />
+
+			<Path x:Name="path1" Fill="#404040"
+				  Data="M16.807 19.011 A8.46 8.46 0 0 1 12 20.5 a8.46 8.46 0 0 1 -4.807 -1.489 c -0.604 -0.415 -0.862 -1.205 -0.51 -1.848 C7.41 15.83 8.91 15 12 15 s 4.59 0.83 5.318 2.163 c 0.35 0.643 0.093 1.433 -0.511 1.848 Z M12 12 a3 3 0 1 0 0 -6 a3 3 0 0 0 0 6 Z" />
+		</Canvas>
+	</Viewbox>
+</Window>

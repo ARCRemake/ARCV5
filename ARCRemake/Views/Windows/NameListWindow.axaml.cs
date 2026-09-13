@@ -50,12 +50,7 @@ public partial class NameListWindow : AppWindow
 
     private void Window_Closed(object s, WindowClosingEventArgs e)
     {
-        if(Directory.EnumerateFiles($"{Environment.CurrentDirectory}/NameLists").Count() != 0)
-        {
-            RootClasses.MainWindow = new MainWindow();
-            RootClasses.MainWindow.RootNavi.SelectedItem = RootClasses.MainWindow.RootNavi.FooterMenuItems[0];
-            RootClasses.MainWindow.Show();
-        }
+        
         
     }
 

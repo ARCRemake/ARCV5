@@ -56,6 +56,26 @@
 							</StackPanel>
 						</Grid>
 					</ui:SettingsExpanderItem>
+					<ui:SettingsExpanderItem>
+						<Grid Margin="5">
+							<TextBlock Text="名单导入导出：" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+							<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+								<Button Margin="5,0" VerticalAlignment="Center" Click="ExportNL_Click">
+									<StackPanel Orientation="Horizontal" >
+										<ic:FluentIcon Icon="Folder"/>
+										<TextBlock VerticalAlignment="Center" Text="打开名单文件夹"/>
+									</StackPanel>
+								</Button>
+								<Button Margin="5,0" VerticalAlignment="Center" Click="ImportNL_Click">
+									<StackPanel Orientation="Horizontal">
+										<ic:FluentIcon Icon="FolderAdd"/>
+										<TextBlock VerticalAlignment="Center" Text="导入名单文件"/>
+									</StackPanel>
+								</Button>
+							</StackPanel>
+
+						</Grid>
+					</ui:SettingsExpanderItem>
 				</ui:SettingsExpander.Items>
 			</ui:SettingsExpander>
 			<ui:SettingsExpander HorizontalAlignment="Stretch" Margin="5">
@@ -106,21 +126,24 @@
 						<Grid Margin="5">
 							<TextBlock Text="配置导入导出：" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 							<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-								<Button Margin="5,0" VerticalAlignment="Center" >
-									<StackPanel Orientation="Horizontal">
+								<Button Margin="5,0" VerticalAlignment="Center" Click="Export_Click">
+									<StackPanel Orientation="Horizontal" >
 										<ic:FluentIcon Icon="Save"/>
 										<TextBlock VerticalAlignment="Center" Text="导出配置文件"/>
 									</StackPanel>
 								</Button>
-								<Button Margin="5,0" VerticalAlignment="Center" >
+								<Button Margin="5,0" VerticalAlignment="Center" Click="Import_Click">
 									<StackPanel Orientation="Horizontal">
 										<ic:FluentIcon Icon="DocumentAdd"/>
 										<TextBlock VerticalAlignment="Center" Text="导入配置文件"/>
 									</StackPanel>
 								</Button>
 							</StackPanel>
+							
 						</Grid>
+						
 					</ui:SettingsExpanderItem>
+					
 					<ui:SettingsExpanderItem>
 						<Grid Margin="5">
 							<TextBlock Text="恢复默认配置：" VerticalAlignment="Center" HorizontalAlignment="Left"/>

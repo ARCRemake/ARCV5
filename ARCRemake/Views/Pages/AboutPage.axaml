@@ -28,8 +28,8 @@
 								<TextBlock Text="自动点名器" FontSize="16" FontWeight="Bold"/>
 								<TextBlock Text="易用，流畅，美观，先进的教室大屏点名软件" Foreground="Gray" FontSize="12"/>
 								<StackPanel Orientation="Horizontal">
-									<Button Content=" 漏洞反馈 " Margin="5,0"/>
-									<Button Content=" 许可协议 "/>
+									<Button Content=" 漏洞反馈 " Margin="5,0" Click="BUGReport_Click"/>
+									<Button Content=" 许可协议 " Click="EULA_Click"/>
 								</StackPanel>
 							</StackPanel>
 						</StackPanel>
@@ -52,7 +52,7 @@
 				
 				<StackPanel Orientation="Horizontal" Margin="2">
 					<TextBlock Text="项目地址:" VerticalAlignment="Center"/>
-					<HyperlinkButton VerticalAlignment="Center">
+					<HyperlinkButton VerticalAlignment="Center" Tag="https://github.com/ARCRemake/ARCV5" Click="Link_Click">
 						<StackPanel Orientation="Horizontal">
 							<ic:FluentIcon Icon="Link" Margin="5,2"/>
 							<TextBlock Text="https://github.com/ARCRemake/ARCV5" Margin="2"/>
@@ -60,8 +60,8 @@
 					</HyperlinkButton>
 				</StackPanel>
 				<StackPanel Orientation="Horizontal" Margin="2">
-					<TextBlock Text="主开发人员:" VerticalAlignment="Center"/>
-					<HyperlinkButton VerticalAlignment="Center">
+					<TextBlock Text="主开发人员:" VerticalAlignment="Center" />
+					<HyperlinkButton VerticalAlignment="Center" Tag="https://github.com/Xiaowang0229" Click="Link_Click">
 						<StackPanel Orientation="Horizontal">
 							<ic:FluentIcon Icon="Link" Margin="5,2"/>
 							<TextBlock Text="Xiaowang0229" Margin="2"/>
@@ -70,32 +70,32 @@
 				</StackPanel>
 
 				<TextBlock Text="依赖项:" VerticalAlignment="Center" Margin="2"/>
-				<HyperlinkButton VerticalAlignment="Center">
+				<HyperlinkButton VerticalAlignment="Center" Tag="https://github.com/AvaloniaUI/Avalonia" Click="Link_Click">
 					<StackPanel Orientation="Horizontal">
 						<ic:FluentIcon Icon="Link" Margin="5,2"/>
 						<TextBlock Text="Avalonia" Margin="2"/>
 					</StackPanel>
 				</HyperlinkButton>
-				<HyperlinkButton VerticalAlignment="Center">
+				<HyperlinkButton VerticalAlignment="Center" Tag="https://github.com/amwx/FluentAvalonia" Click="Link_Click">
 					<StackPanel Orientation="Horizontal">
 						<ic:FluentIcon Icon="Link" Margin="5,2"/>
 						<TextBlock Text="FluentAvaloniaUI" Margin="2"/>
 
 					</StackPanel>
 				</HyperlinkButton>
-				<HyperlinkButton VerticalAlignment="Center">
+				<HyperlinkButton VerticalAlignment="Center" Tag="https://github.com/davidxuang/FluentIcons" Click="Link_Click">
 					<StackPanel Orientation="Horizontal">
 						<ic:FluentIcon Icon="Link" Margin="5,2"/>
 						<TextBlock Text="FluentIcons.Avalonia" Margin="2"/>
 					</StackPanel>
 				</HyperlinkButton>
-				<HyperlinkButton VerticalAlignment="Center">
+				<HyperlinkButton VerticalAlignment="Center" Tag="https://github.com/DearVa/LiveMarkdown.Avalonia" Click="Link_Click">
 					<StackPanel Orientation="Horizontal">
 						<ic:FluentIcon Icon="Link" Margin="5,2"/>
 						<TextBlock Text="LiveMarkdown.Avalonia" Margin="2"/>
 					</StackPanel>
 				</HyperlinkButton>
-				<HyperlinkButton VerticalAlignment="Center">
+				<HyperlinkButton VerticalAlignment="Center" Tag="https://github.com/JamesNK/Newtonsoft.Json" Click="Link_Click">
 					<StackPanel Orientation="Horizontal">
 						<ic:FluentIcon Icon="Link" Margin="5,2"/>
 						<TextBlock Text="Newtonsoft.Json" Margin="2"/>

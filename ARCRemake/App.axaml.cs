@@ -4,6 +4,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text.Json.Nodes;
 
 namespace ARCRemake
@@ -31,6 +32,12 @@ namespace ARCRemake
                             base.OnFrameworkInitializationCompleted();
                             return;
 
+                        }
+                        if(Directory.EnumerateFiles($"{Environment.CurrentDirectory}/NameLists").Count() == 0)
+                        {
+                            desktop.MainWindow = new NameListWindow();
+                            base.OnFrameworkInitializationCompleted();
+                            return;
                         }
                         desktop.MainWindow = new MainWindow();
                         base.OnFrameworkInitializationCompleted();

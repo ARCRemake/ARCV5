@@ -1,3 +1,4 @@
+using ARCRemake.Utils;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
@@ -66,5 +67,12 @@ public partial class AboutPage : UserControl
 
         }
 
+    }
+
+    private async void CheckUpdate_Click(object s, RoutedEventArgs e)
+    {
+        CheckUpdate.IsEnabled = false;
+        await UpdateServices.CheckUpdateAsync(false);
+        CheckUpdate.IsEnabled = true;
     }
 }

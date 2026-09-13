@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:ic="using:FluentIcons.Avalonia"
 			 xmlns:ui="using:FluentAvalonia.UI.Controls"
+			 xmlns:cons="clr-namespace:ARCRemake.Utils;assembly=ARCRemake"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 Loaded="Page_Loaded"
 			 Unloaded="Page_UnLoaded"
@@ -32,12 +33,18 @@
 								</StackPanel>
 							</StackPanel>
 						</StackPanel>
-						<Button Classes="accent" HorizontalAlignment="Right" VerticalAlignment="Center">
+						<StackPanel  HorizontalAlignment="Right" VerticalAlignment="Center" >
+							<Button Classes="accent" HorizontalAlignment="Center" Click="CheckUpdate_Click" x:Name="CheckUpdate">
+								<StackPanel Orientation="Horizontal">
+									<ic:FluentIcon Icon="ArrowClockwise" Margin="2"/>
+									<TextBlock Text="检测更新" Margin="2"/>
+								</StackPanel>
+							</Button>
 							<StackPanel Orientation="Horizontal">
-								<ic:FluentIcon Icon="ArrowClockwise" Margin="2"/>
-								<TextBlock Text="检测更新" Margin="2"/>
+								<TextBlock Text="当前版本："/>
+								<TextBlock FontWeight="Bold" Text="{x:Static cons:RootClasses.AppVersion}"/>
 							</StackPanel>
-						</Button>
+						</StackPanel>
 					</Grid>
 				</ui:SettingsExpander.Header>
 			</ui:SettingsExpander>

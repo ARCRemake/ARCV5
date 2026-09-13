@@ -61,7 +61,7 @@
 					<HyperlinkButton VerticalAlignment="Center" >
 						<StackPanel Orientation="Horizontal">
 							<ic:FluentIcon Icon="Link" Margin="5,2"/>
-							<TextBlock Text="自动点名器软件许可协议" Margin="0" VerticalAlignment="Center"/>
+							<TextBlock Text="GNU Public License version 3.0 许可协议" Margin="0" VerticalAlignment="Center"/>
 						</StackPanel>
 					</HyperlinkButton>
 				</StackPanel>

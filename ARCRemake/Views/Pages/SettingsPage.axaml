@@ -9,7 +9,7 @@
 			 Unloaded="Page_UnLoaded"
              x:Class="ARCRemake.SettingsPage">
 	<ScrollViewer Margin="5">
-	<StackPanel Margin="5">
+	<StackPanel>
 		<TextBlock x:Name="ModeTitle" Text="点名设置" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 		<StackPanel x:Name="RootPanel">
 			<ui:SettingsExpander HorizontalAlignment="Stretch" Margin="5">
@@ -35,19 +35,19 @@
 						<Grid HorizontalAlignment="Stretch"  Margin="5">
 							<TextBlock Text="名单操作:" VerticalAlignment="Center"/>
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-								<Button Margin="5,0" VerticalAlignment="Center" >
+								<Button Margin="5,0" VerticalAlignment="Center" Click="AddNameList_Click">
 									<StackPanel Orientation="Horizontal">
 										<ic:FluentIcon Icon="Add"/>
 										<TextBlock VerticalAlignment="Center" Text="添加名单"/> 
 									</StackPanel>
 								</Button>
-								<Button Margin="0,0,5,0" VerticalAlignment="Center" >
+								<Button Margin="0,0,5,0" VerticalAlignment="Center" Click="ModifyNameList_Click">
 									<StackPanel Orientation="Horizontal">
 										<ic:FluentIcon Icon="Edit"/>
 										<TextBlock VerticalAlignment="Center" Text="编辑名单"/>
 									</StackPanel>
 								</Button>
-								<Button  Foreground="Red" VerticalAlignment="Center">
+								<Button  Foreground="Red" VerticalAlignment="Center" Click="DelNameList_Click">
 									<StackPanel Orientation="Horizontal">
 										<ic:FluentIcon Icon="Delete"/>
 										<TextBlock VerticalAlignment="Center" Text="删除名单" Foreground="Red"/>
@@ -143,6 +143,37 @@
 			<ui:SettingsExpander HorizontalAlignment="Stretch" Margin="5">
 				<ui:SettingsExpander.Header>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+						<ic:FluentIcon Icon="Balloon" Height="32" Width="32" FontSize="28"/>
+						<StackPanel VerticalAlignment="Center" Margin="5.0">
+							<TextBlock FontSize="16" FontWeight="Bold" Text="悬浮球设置"/>
+							<TextBlock Text="更改悬浮球的显示方式"/>
+						</StackPanel>
+					</StackPanel>
+				</ui:SettingsExpander.Header>
+				<ui:SettingsExpander.Items>
+					<ui:SettingsExpanderItem>
+						<Grid Margin="5">
+							<TextBlock Text="启用悬浮球：" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+							<ToggleSwitch VerticalAlignment="Center" HorizontalAlignment="Right" x:Name="UsingHoverBall" Click="UsingHoverBall_Click"/>
+						</Grid>
+					</ui:SettingsExpanderItem>
+					<ui:SettingsExpanderItem IsVisible="False">
+						<Grid Margin="5">
+							<TextBlock Text="悬浮球总在最上方：" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+							<ToggleSwitch VerticalAlignment="Center" HorizontalAlignment="Right"/>
+						</Grid>
+					</ui:SettingsExpanderItem>
+					<ui:SettingsExpanderItem IsVisible="False">
+						<Grid Margin="5">
+							<TextBlock Text="可拖拽悬浮球：" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+							<ToggleSwitch VerticalAlignment="Center" HorizontalAlignment="Right"/>
+						</Grid>
+					</ui:SettingsExpanderItem>
+				</ui:SettingsExpander.Items>
+			</ui:SettingsExpander>
+			<ui:SettingsExpander HorizontalAlignment="Stretch" Margin="5">
+				<ui:SettingsExpander.Header>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
 						<ic:FluentIcon Icon="Settings" Height="32" Width="32" FontSize="28"/>
 						<StackPanel VerticalAlignment="Center" Margin="5.0">
 							<TextBlock FontSize="16" FontWeight="Bold" Text="其他设置"/>
@@ -154,7 +185,7 @@
 					<ui:SettingsExpanderItem>
 						<Grid Margin="5">
 							<TextBlock Text="程序启动时检测更新：" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-							<ToggleSwitch VerticalAlignment="Center" HorizontalAlignment="Right"/>
+							<ToggleSwitch VerticalAlignment="Center" HorizontalAlignment="Right" x:Name="StartUpCheckUpdate" Click="StartUpCheckUpdate_Click"/>
 						</Grid>
 					</ui:SettingsExpanderItem>
 				</ui:SettingsExpander.Items>

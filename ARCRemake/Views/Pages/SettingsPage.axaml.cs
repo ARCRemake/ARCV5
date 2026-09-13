@@ -8,12 +8,14 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Styling;
+using FluentAvalonia.Core;
 using FluentAvalonia.UI.Controls;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ARCRemake;
@@ -78,6 +80,8 @@ public partial class SettingsPage : UserControl
         CGDM.Value = a2.IntervalTick;
         DSDM.Value = a2.ScheduledSeconds;
         PLDM.Value = a2.BatchCounts;
+        UsingHoverBall.IsChecked = a2.UsingHoverBall;
+        StartUpCheckUpdate.IsChecked = a2.StartUpCheckUpdate;
     }
 
     private void NameListBox_SelectionChanged(object s,RoutedEventArgs e)
@@ -134,33 +138,45 @@ public partial class SettingsPage : UserControl
 
     }
 
-    private void Recovery_Click(object s,RoutedEventArgs e)
+    private async void Recovery_Click(object s,RoutedEventArgs e)
     {
-        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", ConfigHelper.InitConfig());
-        Directory.Delete($"{Environment.CurrentDirectory}/NameLists", true);
-        var exePath = Environment.ProcessPath
-            ?? throw new InvalidOperationException("无法获取当前可执行文件路径。");
-
-        var psi = new ProcessStartInfo
+        var dlg = new ContentDialog
         {
-            FileName = exePath,
-            UseShellExecute = false,
-            WorkingDirectory = AppContext.BaseDirectory,
+            Title = "警告",
+            Content = $"是否确认要将程序的所有配置永久恢复默认？(真的很久！)",
+            PrimaryButtonText = "确定",
+            SecondaryButtonText = "取消",
+            DefaultButton = ContentDialogButton.Primary
         };
-
-
-
-        Process.Start(psi);
-
-        if (Application.Current?.ApplicationLifetime
-            is IClassicDesktopStyleApplicationLifetime desktop)
+        if(await dlg.ShowAsync() == ContentDialogResult.Primary)
         {
-            desktop.Shutdown();
+            JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", ConfigHelper.InitConfig());
+            Directory.Delete($"{Environment.CurrentDirectory}/NameLists", true);
+            var exePath = Environment.ProcessPath
+                ?? throw new InvalidOperationException("无法获取当前可执行文件路径。");
+
+            var psi = new ProcessStartInfo
+            {
+                FileName = exePath,
+                UseShellExecute = false,
+                WorkingDirectory = AppContext.BaseDirectory,
+            };
+
+
+
+            Process.Start(psi);
+
+            if (Application.Current?.ApplicationLifetime
+                is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.Shutdown();
+            }
+            else
+            {
+                Environment.Exit(0);
+            }
         }
-        else
-        {
-            Environment.Exit(0);
-        }
+        
     }
 
     private void CGDM_TextChanged(object s,RoutedEventArgs e)
@@ -184,5 +200,84 @@ public partial class SettingsPage : UserControl
         JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
     }
 
+    private void AddNameList_Click(object s, RoutedEventArgs e)
+    {
+        var win = new NameListWindow();
+        win.Show();
+        RootClasses.MainWindow.Close();
+    }
+
+    private void ModifyNameList_Click(object s, RoutedEventArgs e)
+    {
+        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        var win = new NameListWindow(a.CurrentNameListPath);
+        win.Show();
+        RootClasses.MainWindow.Close();
+    }
+
+    private async void DelNameList_Click(object s, RoutedEventArgs e)
+    {
+        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        var dlg = new ContentDialog
+        {
+            Title = "警告",
+            Content = $"是否确认删除名单“{a.CurrentNameListPath}”？它将会永久删除！(真的很久！)",
+            PrimaryButtonText="确定",
+            SecondaryButtonText="取消",
+            DefaultButton = ContentDialogButton.Primary
+        };
+        if(await dlg.ShowAsync() == ContentDialogResult.Primary)
+        {
+            File.Delete(a.CurrentNameListPath);
+            if(Directory.EnumerateFiles($"{Environment.CurrentDirectory}/NameLists").Count() == 0)
+            {
+                var win = new NameListWindow();
+                win.Show();
+                RootClasses.MainWindow.Close();
+            }
+            else
+            {
+                var a2 = Directory.EnumerateFiles($"{Environment.CurrentDirectory}/NameLists").ToList();
+                a.CurrentNameListPath = a2[0];
+                JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
+                NameListBox.Items.Clear();
+                foreach (var a3 in Directory.EnumerateFiles($"{Environment.CurrentDirectory}\\NameLists", "*.json"))
+                {
+                    try
+                    {
+                        var b = JsonServices.ReadJson<NameListConfig>(a3);
+                        var ci = new ComboBoxItem
+                        {
+                            Content = $"{b.ListName}（{a3}）",
+                            Tag = $"{a3}"
+                        };
+
+                        NameListBox.Items.Add(ci);
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+
+                }
+                NameListBox.SelectedIndex = 0;
+            }
+        }
+
+    }
+
+    private void UsingHoverBall_Click(object s,RoutedEventArgs e)
+    {
+        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        a.UsingHoverBall = UsingHoverBall.IsChecked ?? true;
+        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
+    }
+
+    private void StartUpCheckUpdate_Click(object s, RoutedEventArgs e)
+    {
+        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        a.StartUpCheckUpdate = StartUpCheckUpdate.IsChecked ?? true;
+        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
+    }
 
 }

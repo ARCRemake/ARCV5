@@ -20,6 +20,14 @@ namespace ARCRemake.Utils
         public required int IntervalTick { get; set; }
         public required int ScheduledSeconds { get; set; }
         public required int BatchCounts { get; set; }
+        public required bool StartUpCheckUpdate { get; set; }
+        public required bool UsingHoverBall { get; set; }
+    }
+
+    public class UpdateConfig
+    {
+        public required string LatestVersion { get; set; }
+        public required string LatestLink { get; set; }
     }
     
     public static class ConfigHelper
@@ -34,7 +42,9 @@ namespace ARCRemake.Utils
                 CurrentNameListPath = "",
                 IntervalTick = 50,
                 ScheduledSeconds = 10,
-                BatchCounts = 3
+                BatchCounts = 3,
+                StartUpCheckUpdate = true,
+                UsingHoverBall = true,
             };
         }
     }

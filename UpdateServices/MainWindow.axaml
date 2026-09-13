@@ -1,9 +1,25 @@
-<Window xmlns="https://github.com/avaloniaui"
+<wnd:AppWindow xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:ui="using:FluentAvalonia.UI.Controls"
+		xmlns:wnd="using:FluentAvalonia.UI.Windowing"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" Width="600" Height="375" MaxHeight="375" MinHeight="375" MaxWidth="600" MinWidth="600"
+			   CanResize="False"
+			   CanMaximize="False"
+			   ShowAsDialog="True"
+			   Loaded="Window_Loaded"
         x:Class="UpdateServices.MainWindow"
-        Title="UpdateServices">
-    Welcome to Avalonia!
-</Window>
+        Title="更新服务">
+	<Grid Margin="10,10,10,10">
+		<DockPanel LastChildFill="True" Margin="0,0,0,0">
+			<TextBlock Text="正在安装更新包……" FontSize="18" FontWeight="Bold" DockPanel.Dock="Top"/>
+			<TextBox  Text="" x:Name="log" DockPanel.Dock="Top" AcceptsReturn="True" IsReadOnly="True"
+					TextWrapping="Wrap" Margin="0,5,0,30"/>
+		</DockPanel>
+		<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+			<TextBlock x:Name="progresstext" Text="当前进度：0%"/>
+			<ProgressBar x:Name="progressbar" HorizontalAlignment="Stretch" Margin="0,5,0,0"/>
+		</StackPanel>
+	</Grid>
+</wnd:AppWindow>

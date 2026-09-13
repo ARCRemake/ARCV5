@@ -18,5 +18,6 @@
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="FluentAvaloniaUI" Version="2.5.1" />
   </ItemGroup>
 </Project>

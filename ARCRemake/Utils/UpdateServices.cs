@@ -3,7 +3,9 @@ using FluentAvalonia.UI.Controls;
 using LiveMarkdown.Avalonia;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,7 +44,50 @@ namespace ARCRemake.Utils
                         };
                         if(await dlg.ShowAsync() == ContentDialogResult.Primary)
                         {
-
+                            if(GetSystem() == "win-x64")
+                            {
+                                var m = new ProcessStartInfo
+                                {
+                                    WorkingDirectory = Environment.CurrentDirectory,
+                                    FileName = "UpdateServices-winx64.exe",
+                                };
+                                m.ArgumentList.Add($"{d.LatestLink}");
+                                m.ArgumentList.Add($"{Environment.ProcessPath}");
+                                Process.Start(m);
+                            }
+                            else if (GetSystem() == "win-x86")
+                            {
+                                var m = new ProcessStartInfo
+                                {
+                                    WorkingDirectory = Environment.CurrentDirectory,
+                                    FileName = "UpdateServices-winx86.exe",
+                                };
+                                m.ArgumentList.Add($"{d.LatestLink}");
+                                m.ArgumentList.Add($"{Environment.ProcessPath}");
+                                Process.Start(m);
+                            }
+                            else if (GetSystem() == "linux-arm64")
+                            {
+                                var m = new ProcessStartInfo
+                                {
+                                    WorkingDirectory = Environment.CurrentDirectory,
+                                    FileName = "UpdateServices-linuxarm64",
+                                };
+                                m.ArgumentList.Add($"{d.LatestLink}");
+                                m.ArgumentList.Add($"{Environment.ProcessPath}");
+                                Process.Start(m);
+                            }
+                            else if (GetSystem() == "linux-x64")
+                            {
+                                var m = new ProcessStartInfo
+                                {
+                                    WorkingDirectory = Environment.CurrentDirectory,
+                                    FileName = "UpdateServices-linuxx64",
+                                };
+                                m.ArgumentList.Add($"{d.LatestLink}");
+                                m.ArgumentList.Add($"{Environment.ProcessPath}");
+                                Process.Start(m);
+                            }
                         }
                     }
                     else
@@ -73,6 +118,33 @@ namespace ARCRemake.Utils
                     };
                 }
             }
+        }
+
+        public static string GetSystem()
+        {
+            var arch = RuntimeInformation.ProcessArchitecture;
+
+            if (OperatingSystem.IsWindows())
+            {
+                return arch switch
+                {
+                    Architecture.X64 => "win-x64",
+                    Architecture.X86 => "win-x86",
+                    _ => "unknown"
+                };
+            }
+
+            if (OperatingSystem.IsLinux())
+            {
+                return arch switch
+                {
+                    Architecture.Arm64 => "linux-arm64",
+                    Architecture.X64 => "linux-x64",
+                    _ => "unknown"
+                };
+            }
+
+            return "unknown";
         }
     }
 }

@@ -92,21 +92,27 @@
 					<ui:SettingsExpanderItem>
 						<Grid Margin="5">
 							<TextBlock Text="常规点名间隔时长(ms):" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-							<NumericUpDown SizeChanged="CGDM_TextChanged" x:Name="CGDM" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+							<NumericUpDown SizeChanged="CGDM_TextChanged" x:Name="CGDM" VerticalAlignment="Center" HorizontalAlignment="Right" FormatString="N0"
+               ParsingNumberStyle="Integer"
+               Increment="1"/>
 						</Grid>
 						
 					</ui:SettingsExpanderItem>
 					<ui:SettingsExpanderItem>
 						<Grid Margin="5">
 							<TextBlock Text="定时点名时长(s):" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-							<NumericUpDown SizeChanged="DSDM_TextChanged" x:Name="DSDM" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+							<NumericUpDown SizeChanged="DSDM_TextChanged" x:Name="DSDM" VerticalAlignment="Center" HorizontalAlignment="Right" FormatString="N0"
+               ParsingNumberStyle="Integer"
+               Increment="1"/>
 						</Grid>
 						
 					</ui:SettingsExpanderItem>
 					<ui:SettingsExpanderItem>
 						<Grid Margin="5">
 							<TextBlock Text="批量点名个数:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-							<NumericUpDown SizeChanged="PLDM_TextChanged" x:Name="PLDM" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+							<NumericUpDown SizeChanged="PLDM_TextChanged" x:Name="PLDM" VerticalAlignment="Center" HorizontalAlignment="Right" FormatString="N0"
+               ParsingNumberStyle="Integer"
+               Increment="1"/>
 						</Grid>
 					</ui:SettingsExpanderItem>
 				</ui:SettingsExpander.Items>

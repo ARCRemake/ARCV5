@@ -63,7 +63,6 @@ public partial class SettingsPage : UserControl
 
         }
         var a2 = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
-        var a3 = new ComboBoxItem { };
         foreach (var a4 in NameListBox.Items)
         {
             if (a4 is ComboBoxItem a5)
@@ -205,6 +204,37 @@ public partial class SettingsPage : UserControl
     {
         var win = new NameListWindow();
         win.ShowDialog(RootClasses.MainWindow);
+        NameListBox.Items.Clear();
+        foreach (var a3 in Directory.EnumerateFiles($"{Environment.CurrentDirectory}\\NameLists", "*.json"))
+        {
+            try
+            {
+                var b = JsonServices.ReadJson<NameListConfig>(a3);
+                var ci = new ComboBoxItem
+                {
+                    Content = $"{b.ListName}（{a3}）",
+                    Tag = $"{a3}"
+                };
+
+                NameListBox.Items.Add(ci);
+            }
+            catch
+            {
+                continue;
+            }
+
+        }
+        foreach (var a4 in NameListBox.Items)
+        {
+            if (a4 is ComboBoxItem a5)
+            {
+                if (Path.GetFileName((string)a5.Tag) == Path.GetFileName(a2.CurrentNameListPath))
+                {
+                    NameListBox.SelectedItem = a5;
+                    break;
+                }
+            }
+        }
     }
 
     private void ModifyNameList_Click(object s, RoutedEventArgs e)
@@ -212,6 +242,7 @@ public partial class SettingsPage : UserControl
         var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
         var win = new NameListWindow(a.CurrentNameListPath);
         win.ShowDialog(RootClasses.MainWindow);
+        NameListBox.Items.Clear();
     }
 
     private async void DelNameList_Click(object s, RoutedEventArgs e)

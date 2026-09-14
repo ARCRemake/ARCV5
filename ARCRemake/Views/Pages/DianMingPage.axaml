@@ -5,7 +5,7 @@
 			 xmlns:ui="using:FluentAvalonia.UI.Controls"
 			 xmlns:ic="using:FluentIcons.Avalonia"
 			 Loaded="Page_Loaded"
-			 
+			 Unloaded="Page_Unloaded"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ARCRemake.DianMingPage">
 	<Grid Margin="5">
@@ -14,7 +14,7 @@
 		<ListBox x:Name="ListDianMingBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="100" BorderBrush="Gray" BorderThickness="2" ScrollViewer.AllowAutoHide="False" ScrollViewer.VerticalScrollBarVisibility="Visible" IsVisible="False"/>
 		<Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Classes="accent" x:Name="RootButton" Click="RootButton_Click">
 			<Button.Content>
-				<StackPanel Orientation="Horizontal" Margin="30,10">
+				<StackPanel Orientation="Horizontal" Margin="30,15">
 					<ic:FluentIcon Icon="Play"/>
 					<TextBlock Text="开始点名" FontSize="16" Margin="10,0" FontWeight="Bold"/>
 				</StackPanel>

@@ -19,6 +19,7 @@ namespace ARCRemake;
 public partial class NameListWindow : AppWindow
 {
     private NameListConfig config;
+    private string? NamelistPath = null;
 
     public NameListWindow()
     {
@@ -38,7 +39,7 @@ public partial class NameListWindow : AppWindow
         InitializeComponent();
         
             ModeTitle.Text = "修改名单";
-
+        NamelistPath = NameListPath;
         config = JsonServices.ReadJson<NameListConfig>(NameListPath);
         NameText.Text = config.ListName;
         foreach(var name in config.Names)
@@ -61,11 +62,18 @@ public partial class NameListWindow : AppWindow
         {
             config.Names.Add(i.Trim());
         }
-        if (File.Exists($"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json")) File.Delete($"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json");
-        JsonServices.WriteJson<NameListConfig>($"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json", config);
-        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
-        a.CurrentNameListPath = $"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json";
-        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
+        if(NamelistPath != null)
+        {
+            if (File.Exists($"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json")) File.Delete($"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json");
+            JsonServices.WriteJson<NameListConfig>($"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json", config);
+            var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+            a.CurrentNameListPath = $"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json";
+            JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
+        }
+        else
+        {
+            JsonServices.WriteJson<NameListConfig>(NamelistPath, config);
+        }
         this.Close();
     }
     private void Page_Loaded(object s, RoutedEventArgs e)

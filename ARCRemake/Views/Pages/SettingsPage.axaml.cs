@@ -43,6 +43,7 @@ public partial class SettingsPage : UserControl
     private async void Page_Loaded(object s, RoutedEventArgs e)
     {
         await StartSPAnimation(RootPanel);
+        NameListBox.Items.Clear();
         foreach (var a in Directory.EnumerateFiles($"{Environment.CurrentDirectory}\\NameLists", "*.json"))
         {
             try
@@ -86,10 +87,19 @@ public partial class SettingsPage : UserControl
 
     private void NameListBox_SelectionChanged(object s, RoutedEventArgs e)
     {
-
-        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
-        a.CurrentNameListPath = (string)((ComboBoxItem)NameListBox.SelectedItem).Tag;
-        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
+        
+        if(NameListBox.SelectedItem is ComboBoxItem cbi)
+        {
+            if(cbi.Tag is string cbitag)
+            {
+                if(cbitag != null)
+                {
+                    var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+                    a.CurrentNameListPath = (string)((ComboBoxItem)NameListBox.SelectedItem).Tag;
+                    JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
+                }
+            }
+        }
     }
 
     private void Page_UnLoaded(object s, RoutedEventArgs e)
@@ -99,12 +109,6 @@ public partial class SettingsPage : UserControl
 
             animation.IsVisible = false;
         }
-        var a2 = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
-        NameListBox.Items.Clear();
-
-        CGDM.Value = a2.IntervalTick;
-        DSDM.Value = a2.ScheduledSeconds;
-        PLDM.Value = a2.BatchCounts;
     }
 
 
@@ -223,7 +227,9 @@ public partial class SettingsPage : UserControl
                 continue;
             }
 
+            
         }
+        var a2 = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
         foreach (var a4 in NameListBox.Items)
         {
             if (a4 is ComboBoxItem a5)
@@ -243,6 +249,38 @@ public partial class SettingsPage : UserControl
         var win = new NameListWindow(a.CurrentNameListPath);
         win.ShowDialog(RootClasses.MainWindow);
         NameListBox.Items.Clear();
+        foreach (var a3 in Directory.EnumerateFiles($"{Environment.CurrentDirectory}\\NameLists", "*.json"))
+        {
+            try
+            {
+                var b = JsonServices.ReadJson<NameListConfig>(a3);
+                var ci = new ComboBoxItem
+                {
+                    Content = $"{b.ListName}（{a3}）",
+                    Tag = $"{a3}"
+                };
+
+                NameListBox.Items.Add(ci);
+            }
+            catch
+            {
+                continue;
+            }
+
+
+        }
+        var a2 = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        foreach (var a4 in NameListBox.Items)
+        {
+            if (a4 is ComboBoxItem a5)
+            {
+                if (Path.GetFileName((string)a5.Tag) == Path.GetFileName(a2.CurrentNameListPath))
+                {
+                    NameListBox.SelectedItem = a5;
+                    break;
+                }
+            }
+        }
     }
 
     private async void DelNameList_Click(object s, RoutedEventArgs e)

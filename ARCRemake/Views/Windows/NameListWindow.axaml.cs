@@ -60,7 +60,10 @@ public partial class NameListWindow : AppWindow
         config.Names.Clear();
         foreach (var i in NameContent.Text.Split("\r\n"))
         {
-            config.Names.Add(i.Trim());
+            if(!string.IsNullOrEmpty(i))
+            {
+                config.Names.Add(i.Trim());
+            }
         }
         if(NamelistPath != null)
         {

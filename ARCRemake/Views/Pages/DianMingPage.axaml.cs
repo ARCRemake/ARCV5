@@ -74,15 +74,18 @@ public partial class DianMingPage : UserControl
     {
         switch(RootClasses.DianMingMode)
         {
-            case "随机点名":
+            case "常规点名":
                 if (DianmingStatus)
                 {
                     DMTimer.Stop();
                     DianmingStatus = false;
+                    NameBlock.Text = Pickernamelist[randomname.Next(0, Pickernamelist.Count - 1)];
+                    Pickernamelist.RemoveAll(x => x == NameBlock.Text);
                 }
                 else
                 {
                     DianmingStatus = true;
+                    DMTimer.Start();
                 }
                 break;
             case "立即点名":

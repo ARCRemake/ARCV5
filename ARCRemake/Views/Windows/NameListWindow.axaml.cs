@@ -44,7 +44,7 @@ public partial class NameListWindow : AppWindow
         NameText.Text = config.ListName;
         foreach(var name in config.Names)
         {
-            NameContent.Text += $"{name}\r\n";
+            NameContent.Text += $"{name}\n";
         }
         ContinueButton.IsEnabled = false;
     }
@@ -57,6 +57,7 @@ public partial class NameListWindow : AppWindow
 
     private void Button_Click(object s, RoutedEventArgs e)
     {
+        config.ListName = NameText.Text;
         config.Names.Clear();
         foreach (var i in NameContent.Text.Split("\r\n"))
         {
@@ -67,15 +68,16 @@ public partial class NameListWindow : AppWindow
         }
         if(NamelistPath != null)
         {
+            
+            JsonServices.WriteJson<NameListConfig>(NamelistPath, config);
+        }
+        else
+        {
             if (File.Exists($"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json")) File.Delete($"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json");
             JsonServices.WriteJson<NameListConfig>($"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json", config);
             var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
             a.CurrentNameListPath = $"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json";
             JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
-        }
-        else
-        {
-            JsonServices.WriteJson<NameListConfig>(NamelistPath, config);
         }
         this.Close();
     }

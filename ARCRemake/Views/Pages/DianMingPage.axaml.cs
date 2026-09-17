@@ -79,9 +79,18 @@ public partial class DianMingPage : UserControl
                 {
                     DMTimer.Stop();
                     DianmingStatus = false;
-                    NameBlock.Text = Pickernamelist[randomname.Next(0, Pickernamelist.Count - 1)];
-                    Pickernamelist.RemoveAll(x => x == NameBlock.Text);
-                }
+                    if(Pickernamelist.Count > 0){
+							NameBlock.Text = Pickernamelist[randomname.Next(0, Pickernamelist.Count - 1)];
+                    		Pickernamelist.RemoveAll(x => x == NameBlock.Text);
+                	}
+					else
+					{
+                        Pickernamelist.Clear();
+                        Pickernamelist.AddRange(Fullnamelist);
+                        NameBlock.Text = Pickernamelist[randomname.Next(0, Pickernamelist.Count - 1)];
+                    		Pickernamelist.RemoveAll(x => x == NameBlock.Text);
+					}
+				}
                 else
                 {
                     DianmingStatus = true;
@@ -89,8 +98,37 @@ public partial class DianMingPage : UserControl
                 }
                 break;
             case "立即点名":
+				    if(Pickernamelist.Count > 0){
+							NameBlock.Text = Pickernamelist[randomname.Next(0, Pickernamelist.Count - 1)];
+                    		Pickernamelist.RemoveAll(x => x == NameBlock.Text);
+                	}
+					else
+					{
+                        Pickernamelist.Clear();
+                        Pickernamelist.AddRange(Fullnamelist);
+                        NameBlock.Text = Pickernamelist[randomname.Next(0, Pickernamelist.Count - 1)];
+                    	Pickernamelist.RemoveAll(x => x == NameBlock.Text);
+					}
                 break;
             case "批量点名":
+                var a2 = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+                for (int i = 0; i < a2.BatchCounts; i++)
+                {
+                    if (Pickernamelist.Count > 0)
+                    {
+                        var a = Pickernamelist[randomname.Next(0, Pickernamelist.Count - 1)];
+                        ListDianMingBox.Items.Add(a);
+                        Pickernamelist.RemoveAll(x => x == a);
+                    }
+                    else
+                    {
+                        Pickernamelist.Clear();
+                        Pickernamelist.AddRange(Fullnamelist);
+                        var a = Pickernamelist[randomname.Next(0, Pickernamelist.Count - 1)];
+                        ListDianMingBox.Items.Add(a);
+                        Pickernamelist.RemoveAll(x => x == a);
+                    }
+                }
                 break;
             case "定时点名":
                 break;

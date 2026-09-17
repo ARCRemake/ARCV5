@@ -15,8 +15,8 @@
 		<Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Classes="accent" x:Name="RootButton" Click="RootButton_Click">
 			<Button.Content>
 				<StackPanel Orientation="Horizontal" Margin="30,15">
-					<ic:FluentIcon Icon="Play"/>
-					<TextBlock Text="开始点名" FontSize="16" Margin="10,0" FontWeight="Bold"/>
+					<ic:FluentIcon Icon="Play" x:Name="ButtonIcon"/>
+					<TextBlock Text="开始点名" FontSize="16" Margin="10,0" FontWeight="Bold" x:Name="ButtonText"/>
 				</StackPanel>
 			</Button.Content>
 		</Button>

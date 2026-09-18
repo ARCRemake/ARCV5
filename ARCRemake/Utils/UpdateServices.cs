@@ -41,7 +41,8 @@ namespace ARCRemake.Utils
                             Title = "提示",
                             Content = sp,
                             DefaultButton = ContentDialogButton.Primary,
-                            PrimaryButtonText = "确定"
+                            PrimaryButtonText = "立即更新",
+                            SecondaryButtonText = "推迟更新"
                         };
                         if(await dlg.ShowAsync() == ContentDialogResult.Primary)
                         {

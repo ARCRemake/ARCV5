@@ -42,6 +42,7 @@ namespace ARCRemake
                         {
                             desktop.MainWindow = new NameListWindow();
                             base.OnFrameworkInitializationCompleted();
+
                             return;
                         }
                         desktop.MainWindow = new MainWindow();

@@ -8,6 +8,7 @@ using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Windowing;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ARCRemake
 {
@@ -24,7 +25,8 @@ namespace ARCRemake
         {
             if(JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath()).StartUpCheckUpdate)
             {
-                UpdateServices.CheckUpdateAsync(true);
+
+                ChkUpd();
             }
             if (JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath()).UsingHoverBall == true)
             {
@@ -43,6 +45,11 @@ namespace ARCRemake
 
 
             }
+        }
+
+        private async Task ChkUpd()
+        {
+            UpdateServices.CheckUpdateAsync(true);
         }
 
         private void Window_Closing(object s,WindowClosingEventArgs e)

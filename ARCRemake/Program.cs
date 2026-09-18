@@ -13,11 +13,7 @@ namespace ARCRemake
         [STAThread]
         public static void Main(string[] args)
         {
-            if(!Directory.Exists($"{Environment.CurrentDirectory}/NameLists"))
-            {
-                Directory.CreateDirectory($"{Environment.CurrentDirectory}/NameLists");
-
-            }
+            
             BuildAvaloniaApp()
             .StartWithClassicDesktopLifetime(args);
         }

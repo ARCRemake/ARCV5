@@ -34,10 +34,6 @@ namespace ARCRemake.Utils
                 throw new Exception("无效的 JSON 内容", ex);
             }
         }
-
-        /// <summary>
-        /// 将对象序列化为JSON并写入文件
-        /// </summary>
         public static void WriteJson<T>(string filePath, T data)
         {
             var serializer = new JsonSerializer

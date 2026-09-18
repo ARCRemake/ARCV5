@@ -42,15 +42,15 @@ public partial class HoverWindow : Window
 
     private void Window_Closing(object s,WindowClosingEventArgs e)
     {
-        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
         a.HoverWindowX = this.Position.X;
         a.HoverWindowY = this.Position.Y;
-        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
+        JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), a);
     }
 
     private void Window_Opened(object s,EventArgs e)
     {
-        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
         this.Position = new PixelPoint(a.HoverWindowX, a.HoverWindowY);
     }
 }

@@ -30,16 +30,21 @@ public partial class AddNameList : UserControl
     private void Button_Click(object s,RoutedEventArgs e)
     {
         config.Names.Clear();
-        foreach(var i in NameContent.Text.Split("\r\n"))
+        var b = NameContent.Text.Replace("\r","");
+        foreach(var i in b.Split("\n"))
         {
-            config.Names.Add(i.Trim());
+            if(!string.IsNullOrEmpty(i.Trim()))
+            {
+                config.Names.Add(i.Trim());
+            }
         }
-        if (File.Exists($"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json")) File.Delete($"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json");
-        JsonServices.WriteJson<NameListConfig>($"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json",config);
-        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        
+        if (File.Exists(Path.Combine(RootClasses.NameListFolder(),$"{config.ListName}.json"))) File.Delete(Path.Combine(RootClasses.NameListFolder(),$"{config.ListName}.json"));
+        JsonServices.WriteJson<NameListConfig>(Path.Combine(RootClasses.NameListFolder(),$"{config.ListName}.json"),config);
+        var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
         a.OOBEStatus = true;
-        a.CurrentNameListPath = $"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json";
-        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json",a);
+        a.CurrentNameListPath = Path.Combine(RootClasses.NameListFolder(),$"{config.ListName}.json");
+        JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(),a);
         RootClasses.OOBEWindow.RootFrame.Navigate(typeof(LastScreen));
     }
     private void Page_Loaded(object s, RoutedEventArgs e)

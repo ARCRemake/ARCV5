@@ -21,19 +21,24 @@ namespace ARCRemake
             
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                if(File.Exists($"{Environment.CurrentDirectory}/Config.json"))
+                if (!Directory.Exists(RootClasses.NameListFolder()))
+                {
+                    Directory.CreateDirectory(RootClasses.NameListFolder());
+
+                }
+                if (File.Exists(RootClasses.ConfigPath()))
                 {
                     try
                     {
-                        if (JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json").OOBEStatus == false)
+                        if (JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath()).OOBEStatus == false)
                         {
-                            JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", ConfigHelper.InitConfig());
+                            JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), ConfigHelper.InitConfig());
                             desktop.MainWindow = new OOBEWindow();
                             base.OnFrameworkInitializationCompleted();
                             return;
 
                         }
-                        if(Directory.EnumerateFiles($"{Environment.CurrentDirectory}/NameLists").Count() == 0)
+                        if(Directory.EnumerateFiles(RootClasses.NameListFolder()).Count() == 0)
                         {
                             desktop.MainWindow = new NameListWindow();
                             base.OnFrameworkInitializationCompleted();
@@ -45,7 +50,7 @@ namespace ARCRemake
                     }
                     catch
                     {
-                        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", ConfigHelper.InitConfig());
+                        JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), ConfigHelper.InitConfig());
                         desktop.MainWindow = new OOBEWindow();
                         base.OnFrameworkInitializationCompleted();
                         return;
@@ -54,7 +59,7 @@ namespace ARCRemake
                 }
                 else
                 {
-                    JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", ConfigHelper.InitConfig());
+                    JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), ConfigHelper.InitConfig());
                     desktop.MainWindow = new OOBEWindow();
                     base.OnFrameworkInitializationCompleted();
                     return;

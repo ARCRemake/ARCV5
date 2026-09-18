@@ -22,11 +22,11 @@ namespace ARCRemake
 
         private void Window_Loaded(object s,RoutedEventArgs e)
         {
-            if(JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json").StartUpCheckUpdate)
+            if(JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath()).StartUpCheckUpdate)
             {
                 UpdateServices.CheckUpdateAsync(true);
             }
-            if (JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json").UsingHoverBall == true)
+            if (JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath()).UsingHoverBall == true)
             {
                 if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                 {
@@ -63,6 +63,7 @@ namespace ARCRemake
 
         private void RootNavi_SelectionChanged(object s,NavigationViewSelectionChangedEventArgs e)
         {
+
             if(RootNavi.SelectedItem == NaviItem0)
             {
                 RootFrame.Content = null;

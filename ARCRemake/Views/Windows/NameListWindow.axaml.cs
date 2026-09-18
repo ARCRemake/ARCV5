@@ -59,9 +59,10 @@ public partial class NameListWindow : AppWindow
     {
         config.ListName = NameText.Text;
         config.Names.Clear();
-        foreach (var i in NameContent.Text.Split("\r\n"))
+        var k = NameContent.Text.Replace("\r","");
+        foreach (var i in k.Split("\n"))
         {
-            if(!string.IsNullOrEmpty(i))
+            if(!string.IsNullOrEmpty(i.Trim()))
             {
                 config.Names.Add(i.Trim());
             }
@@ -73,11 +74,12 @@ public partial class NameListWindow : AppWindow
         }
         else
         {
-            if (File.Exists($"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json")) File.Delete($"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json");
-            JsonServices.WriteJson<NameListConfig>($"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json", config);
-            var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
-            a.CurrentNameListPath = $"{Environment.CurrentDirectory}/NameLists/{config.ListName}.json";
-            JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
+            
+            if (File.Exists(Path.Combine(RootClasses.ConfigPath(), $"{config.ListName}.json"))) File.Delete(Path.Combine(RootClasses.ConfigPath(), $"{config.ListName}.json"));
+            JsonServices.WriteJson<NameListConfig>(Path.Combine(RootClasses.ConfigPath(), $"{config.ListName}.json"), config);
+            var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
+            a.CurrentNameListPath = Path.Combine(RootClasses.ConfigPath(), $"{config.ListName}.json");
+            JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), a);
         }
         this.Close();
     }

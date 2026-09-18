@@ -2,6 +2,7 @@
 using FluentAvalonia.UI.Windowing;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace ARCRemake.Utils
@@ -14,7 +15,15 @@ namespace ARCRemake.Utils
         public static OOBEWindow OOBEWindow;
         public static HoverWindow HoverWindow;
         
-
+        public static string ConfigPath()
+        {
+            return Path.Combine(Environment.CurrentDirectory,"Config.json");
+        }
+        public static string NameListFolder()
+        {
+            return Path.Combine(Environment.CurrentDirectory, "NameLists");
+        }
+        
 
     }
 

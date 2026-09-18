@@ -27,8 +27,7 @@ public partial class SettingsPage : UserControl
     public SettingsPage()
     {
         InitializeComponent();
-        var a2 = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
-        NameListBox.Text = $"{JsonServices.ReadJson<AppConfig>(a2.CurrentNameListPath)}（{a2.CurrentNameListPath}）";
+        var a2 = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
         CGDM.Value = a2.IntervalTick;
         DSDM.Value = a2.ScheduledSeconds;
         PLDM.Value = a2.BatchCounts;
@@ -44,7 +43,7 @@ public partial class SettingsPage : UserControl
     {
         await StartSPAnimation(RootPanel);
         NameListBox.Items.Clear();
-        foreach (var a in Directory.EnumerateFiles($"{Environment.CurrentDirectory}\\NameLists", "*.json"))
+        foreach (var a in Directory.EnumerateFiles(RootClasses.NameListFolder(), "*.json"))
         {
             try
             {
@@ -63,7 +62,7 @@ public partial class SettingsPage : UserControl
             }
 
         }
-        var a2 = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        var a2 = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
         foreach (var a4 in NameListBox.Items)
         {
             if (a4 is ComboBoxItem a5)
@@ -94,9 +93,9 @@ public partial class SettingsPage : UserControl
             {
                 if(cbitag != null)
                 {
-                    var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+                    var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
                     a.CurrentNameListPath = (string)((ComboBoxItem)NameListBox.SelectedItem).Tag;
-                    JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
+                    JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), a);
                 }
             }
         }
@@ -154,8 +153,8 @@ public partial class SettingsPage : UserControl
         };
         if (await dlg.ShowAsync() == ContentDialogResult.Primary)
         {
-            JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", ConfigHelper.InitConfig());
-            Directory.Delete($"{Environment.CurrentDirectory}/NameLists", true);
+            JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), ConfigHelper.InitConfig());
+            Directory.Delete(RootClasses.NameListFolder(), true);
             var exePath = Environment.ProcessPath
                 ?? throw new InvalidOperationException("无法获取当前可执行文件路径。");
 
@@ -185,23 +184,23 @@ public partial class SettingsPage : UserControl
 
     private void CGDM_TextChanged(object s, RoutedEventArgs e)
     {
-        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
         a.IntervalTick = (int)CGDM.Value;
-        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
+        JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), a);
     }
 
     private void DSDM_TextChanged(object s, RoutedEventArgs e)
     {
-        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
         a.ScheduledSeconds = (int)DSDM.Value;
-        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
+        JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), a);
     }
 
     private void PLDM_TextChanged(object s, RoutedEventArgs e)
     {
-        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
         a.BatchCounts = (int)PLDM.Value;
-        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
+        JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), a);
     }
 
     private void AddNameList_Click(object s, RoutedEventArgs e)
@@ -209,7 +208,7 @@ public partial class SettingsPage : UserControl
         var win = new NameListWindow();
         win.ShowDialog(RootClasses.MainWindow);
         NameListBox.Items.Clear();
-        foreach (var a3 in Directory.EnumerateFiles($"{Environment.CurrentDirectory}\\NameLists", "*.json"))
+        foreach (var a3 in Directory.EnumerateFiles(RootClasses.NameListFolder(), "*.json"))
         {
             try
             {
@@ -229,7 +228,7 @@ public partial class SettingsPage : UserControl
 
             
         }
-        var a2 = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        var a2 = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
         foreach (var a4 in NameListBox.Items)
         {
             if (a4 is ComboBoxItem a5)
@@ -245,11 +244,11 @@ public partial class SettingsPage : UserControl
 
     private void ModifyNameList_Click(object s, RoutedEventArgs e)
     {
-        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
         var win = new NameListWindow(a.CurrentNameListPath);
         win.ShowDialog(RootClasses.MainWindow);
         NameListBox.Items.Clear();
-        foreach (var a3 in Directory.EnumerateFiles($"{Environment.CurrentDirectory}\\NameLists", "*.json"))
+        foreach (var a3 in Directory.EnumerateFiles(RootClasses.NameListFolder(), "*.json"))
         {
             try
             {
@@ -269,7 +268,7 @@ public partial class SettingsPage : UserControl
 
 
         }
-        var a2 = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        var a2 = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
         foreach (var a4 in NameListBox.Items)
         {
             if (a4 is ComboBoxItem a5)
@@ -285,7 +284,7 @@ public partial class SettingsPage : UserControl
 
     private async void DelNameList_Click(object s, RoutedEventArgs e)
     {
-        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
         var dlg = new ContentDialog
         {
             Title = "警告",
@@ -297,18 +296,18 @@ public partial class SettingsPage : UserControl
         if (await dlg.ShowAsync() == ContentDialogResult.Primary)
         {
             File.Delete(a.CurrentNameListPath);
-            if (Directory.EnumerateFiles($"{Environment.CurrentDirectory}/NameLists").Count() == 0)
+            if (Directory.EnumerateFiles(RootClasses.NameListFolder()).Count() == 0)
             {
                 var win = new NameListWindow();
                 await win.ShowDialog(RootClasses.MainWindow);
             }
             else
             {
-                var a2 = Directory.EnumerateFiles($"{Environment.CurrentDirectory}/NameLists").ToList();
+                var a2 = Directory.EnumerateFiles(RootClasses.NameListFolder()).ToList();
                 a.CurrentNameListPath = a2[0];
-                JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
+                JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), a);
                 NameListBox.Items.Clear();
-                foreach (var a3 in Directory.EnumerateFiles($"{Environment.CurrentDirectory}\\NameLists", "*.json"))
+                foreach (var a3 in Directory.EnumerateFiles(RootClasses.NameListFolder(), "*.json"))
                 {
                     try
                     {
@@ -358,16 +357,16 @@ public partial class SettingsPage : UserControl
         {
             RootClasses.HoverWindow.Close();
         }
-        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
         a.UsingHoverBall = UsingHoverBall.IsChecked ?? true;
-        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
+        JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), a);
     }
 
     private void StartUpCheckUpdate_Click(object s, RoutedEventArgs e)
     {
-        var a = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
         a.StartUpCheckUpdate = StartUpCheckUpdate.IsChecked ?? true;
-        JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", a);
+        JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), a);
     }
 
     private async void Import_Click(object s, RoutedEventArgs e)
@@ -397,7 +396,22 @@ public partial class SettingsPage : UserControl
             };
             if (await dlg.ShowAsync() == ContentDialogResult.Primary)
             {
-                JsonServices.WriteJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json", newcfg);
+                if(!File.Exists(newcfg.CurrentNameListPath))
+                {
+                    var dlg2 = new ContentDialog
+                    {
+                        Title = "警告",
+                        Content = $"配置项不合法，请重新选择。",
+                        PrimaryButtonText = "确定",
+                        SecondaryButtonText = "取消",
+                        DefaultButton = ContentDialogButton.Primary
+                    };
+                    await dlg2.ShowAsync();
+                    return;
+                }
+                File.Copy(newcfg.CurrentNameListPath,Path.Combine(RootClasses.NameListFolder(),Path.GetFileName(newcfg.CurrentNameListPath)));
+                JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), newcfg);
+
                 var dl2g = new ContentDialog
                 {
                     Title = "提示",
@@ -461,7 +475,7 @@ public partial class SettingsPage : UserControl
 
         if (file is not null)
         {
-            JsonServices.WriteJson<AppConfig>(file.TryGetLocalPath(), JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json"));
+            JsonServices.WriteJson<AppConfig>(file.TryGetLocalPath(), JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath()));
             var dlg = new ContentDialog
             {
                 Title = "提示",
@@ -486,7 +500,7 @@ public partial class SettingsPage : UserControl
         try
         {
             var k = JsonServices.ReadJson<NameListConfig>(files[0].TryGetLocalPath());
-            File.Copy(files[0].TryGetLocalPath(), $"{Environment.CurrentDirectory}/NameLists/{files[0].Name}");
+            File.Copy(files[0].TryGetLocalPath(),Path.Combine(RootClasses.NameListFolder(), $"{files[0].Name}"));
             var dlg = new ContentDialog
             {
                 Title = "提示",
@@ -522,7 +536,7 @@ public partial class SettingsPage : UserControl
     {
         Process.Start(new ProcessStartInfo
         {
-            FileName = $"{Environment.CurrentDirectory}/NameLists",
+            FileName = RootClasses.NameListFolder(),
             UseShellExecute = true,
         });
     }

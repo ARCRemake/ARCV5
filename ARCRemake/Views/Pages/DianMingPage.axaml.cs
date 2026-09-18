@@ -5,9 +5,11 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
+using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Navigation;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 
 namespace ARCRemake;
@@ -23,7 +25,7 @@ public partial class DianMingPage : UserControl
     public DianMingPage()
     {
         InitializeComponent();
-        var a2 = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+        var a2 = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
         var timer = new DispatcherTimer();
         timer.Interval = TimeSpan.FromMilliseconds(a2.IntervalTick);
         timer.Tick += (s, e) =>
@@ -47,19 +49,44 @@ public partial class DianMingPage : UserControl
             ListDianMingBox.IsVisible = true;
             NameBlock.IsVisible = false;
         }
-        var a2 = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
-        
-        Fullnamelist = JsonServices.ReadJson<NameListConfig>(a2.CurrentNameListPath).Names;
-        Pickernamelist = JsonServices.ReadJson<NameListConfig>(a2.CurrentNameListPath).Names;
+        var a2 = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
+        if(!File.Exists(a2.CurrentNameListPath))
+        {
+            RootButton.IsEnabled = false;
+            var dlg = new ContentDialog
+            {
+                Title = "错误",
+                Content = $"配置项不存在，请到设置页重新选择",
+                PrimaryButtonText = "确定",
+                DefaultButton = ContentDialogButton.Primary
+            };
+            await dlg.ShowAsync();
+        }
+        try
+        {
+            JsonServices.ReadJson<NameListConfig>(a2.CurrentNameListPath);
+        }
+        catch
+        {
+            RootButton.IsEnabled = false;
+            var dlg = new ContentDialog
+            {
+                Title = "错误",
+                Content = $"配置项不合法，请到设置页重新选择",
+                PrimaryButtonText = "确定",
+                DefaultButton = ContentDialogButton.Primary
+            };
+            await dlg.ShowAsync();
+        }
+        Fullnamelist.AddRange(JsonServices.ReadJson<NameListConfig>(a2.CurrentNameListPath).Names);
+        Pickernamelist.AddRange(JsonServices.ReadJson<NameListConfig>(a2.CurrentNameListPath).Names);
 
-        
+
     }
     private async void Page_Unloaded(object s, RoutedEventArgs e)
     {
-        if(DianmingStatus)
-        {
-            Button_ChangeStatus();
-        }
+        DianmingStatus = false;
+        DMTimer.Stop();
         NameBlock.Text = "请开始点名";
         Fullnamelist.Clear();
         Pickernamelist.Clear();
@@ -111,7 +138,7 @@ public partial class DianMingPage : UserControl
 					}
                 break;
             case "批量点名":
-                var a2 = JsonServices.ReadJson<AppConfig>($"{Environment.CurrentDirectory}/Config.json");
+                var a2 = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
                 for (int i = 0; i < a2.BatchCounts; i++)
                 {
                     if (Pickernamelist.Count > 0)

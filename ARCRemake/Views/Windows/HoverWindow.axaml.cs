@@ -4,6 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using Avalonia.Threading;
 using System;
 
 namespace ARCRemake;
@@ -14,11 +15,18 @@ public partial class HoverWindow : Window
     private bool _isDragging;
     private PixelPoint _startScreenPoint;     
     private PixelPoint _windowStartPosition;   
-    private const double DragThresholdPixels = 6; 
+    private const double DragThresholdPixels = 6;
+    private DispatcherTimer toptimer = new DispatcherTimer();
 
     public HoverWindow()
     {
         InitializeComponent();
+        toptimer.Interval = TimeSpan.FromSeconds(1);
+        toptimer.Tick += (s, e) =>
+        {
+            this.Topmost = true;
+        };
+        toptimer.Start();
 
     }
 
@@ -107,6 +115,7 @@ public partial class HoverWindow : Window
 
     private void Window_Closing(object s,WindowClosingEventArgs e)
     {
+        toptimer.Stop();
         var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
         a.HoverWindowX = this.Position.X;
         a.HoverWindowY = this.Position.Y;

@@ -239,6 +239,7 @@ public partial class SettingsPage : UserControl
                 a.CurrentNameListPath = "";
                 JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), a);
                 NameListBox.Items.Clear();
+                
             }
             else
             {

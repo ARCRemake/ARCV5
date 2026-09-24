@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:ui="using:FluentAvalonia.UI.Controls"
+			 xmlns:pr="clr-namespace:ARCRemake;assembly=ARCRemake"
 			 xmlns:ic="using:FluentIcons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 Loaded="Page_Loaded"
@@ -158,16 +159,21 @@
 					</ui:SettingsExpanderItem>
 				</ui:SettingsExpander.Items>
 			</ui:SettingsExpander>
-			<ui:SettingsExpander HorizontalAlignment="Stretch" Margin="5" IsEnabled="False">
+			<ui:SettingsExpander HorizontalAlignment="Stretch" Margin="5">
 				<ui:SettingsExpander.Header>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
 						<ic:FluentIcon Icon="PaintBrush" Height="32" Width="32" FontSize="28"/>
 						<StackPanel VerticalAlignment="Center" Margin="5.0">
 							<TextBlock FontSize="16" FontWeight="Bold" Text="个性化"/>
-							<TextBlock Text="此设置项暂不开放"/>
+							<TextBlock Text="自定义程序的相关设置，例如主题和点名字体等"/>
 						</StackPanel>
 					</StackPanel>
 				</ui:SettingsExpander.Header>
+				<ui:SettingsExpander.Items>
+					<ui:SettingsExpanderItem>
+						<pr:PersonalizeCard/>
+					</ui:SettingsExpanderItem>
+				</ui:SettingsExpander.Items>
 			</ui:SettingsExpander>
 			<ui:SettingsExpander HorizontalAlignment="Stretch" Margin="5">
 				<ui:SettingsExpander.Header>
@@ -186,18 +192,7 @@
 							<ToggleSwitch VerticalAlignment="Center" HorizontalAlignment="Right" x:Name="UsingHoverBall" Click="UsingHoverBall_Click"/>
 						</Grid>
 					</ui:SettingsExpanderItem>
-					<ui:SettingsExpanderItem IsVisible="False">
-						<Grid Margin="5">
-							<TextBlock Text="悬浮球总在最上方：" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-							<ToggleSwitch VerticalAlignment="Center" HorizontalAlignment="Right"/>
-						</Grid>
-					</ui:SettingsExpanderItem>
-					<ui:SettingsExpanderItem IsVisible="False">
-						<Grid Margin="5">
-							<TextBlock Text="可拖拽悬浮球：" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-							<ToggleSwitch VerticalAlignment="Center" HorizontalAlignment="Right"/>
-						</Grid>
-					</ui:SettingsExpanderItem>
+					
 				</ui:SettingsExpander.Items>
 			</ui:SettingsExpander>
 			<ui:SettingsExpander HorizontalAlignment="Stretch" Margin="5">

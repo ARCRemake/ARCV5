@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:pr="clr-namespace:ARCRemake;assembly=ARCRemake"
 			 xmlns:ic="using:FluentIcons.Avalonia"
 			 xmlns:ui="using:FluentAvalonia.UI.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -11,7 +12,11 @@
 		<StackPanel  IsVisible="True">
 			<TextBlock x:Name="ModeTitle" Text="个性化" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 		</StackPanel>
-		<Button Classes="accent" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15">
+		<StackPanel Margin="5,37,5,70" x:Name="RootPanel">
+			<TextBlock Text="接下来，请对您的程序进行个性化设置，例如自定义程序主题，选取点名字体，主题色等！"/>
+			<pr:PersonalizeCard Margin="5"/>
+		</StackPanel>
+		<Button x:Name="ContinueButton" Classes="accent" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15" Click="Button_Click">
 			<StackPanel Orientation="Horizontal">
 				<TextBlock Text=" " Margin="2"/>
 				<ic:FluentIcon Icon="ArrowRight" Margin="2"/>

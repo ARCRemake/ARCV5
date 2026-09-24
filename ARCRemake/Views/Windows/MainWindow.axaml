@@ -16,28 +16,28 @@
 			<ui:NavigationViewItem x:Name="NaviItem0" Content="常规点名">
 				<ui:NavigationViewItem.IconSource>
 					<ui:ImageIconSource>
-						<ic:FluentImage Icon="Home"/>
+						<ic:FluentImage Icon="Home" Foreground="{DynamicResource SystemAccentColor}"/>
 					</ui:ImageIconSource>
 				</ui:NavigationViewItem.IconSource>
 			</ui:NavigationViewItem>
 			<ui:NavigationViewItem x:Name="NaviItem1" Content="立即点名">
 				<ui:NavigationViewItem.IconSource>
 					<ui:ImageIconSource>
-						<ic:FluentImage Icon="Flash"/>
+						<ic:FluentImage Icon="Flash" Foreground="{DynamicResource SystemAccentColor}"/>
 					</ui:ImageIconSource>
 				</ui:NavigationViewItem.IconSource>
 			</ui:NavigationViewItem>
 			<ui:NavigationViewItem x:Name="NaviItem2" Content="延时点名">
 				<ui:NavigationViewItem.IconSource>
 					<ui:ImageIconSource>
-						<ic:FluentImage Icon="Timer"/>
+						<ic:FluentImage Icon="Timer" Foreground="{DynamicResource SystemAccentColor}"/>
 					</ui:ImageIconSource>
 				</ui:NavigationViewItem.IconSource>
 			</ui:NavigationViewItem>
 			<ui:NavigationViewItem x:Name="NaviItem3" Content="批量点名">
 				<ui:NavigationViewItem.IconSource>
 					<ui:ImageIconSource>
-						<ic:FluentImage Icon="List"/>
+						<ic:FluentImage Icon="List" Foreground="{DynamicResource SystemAccentColor}"/>
 					</ui:ImageIconSource>
 				</ui:NavigationViewItem.IconSource>
 			</ui:NavigationViewItem>
@@ -46,14 +46,14 @@
 			<ui:NavigationViewItem x:Name="NaviItem4" Content="点名设置">
 				<ui:NavigationViewItem.IconSource>
 					<ui:ImageIconSource>
-						<ic:FluentImage Icon="Settings"/>
+						<ic:FluentImage Icon="Settings" Foreground="{DynamicResource SystemAccentColor}"/>
 					</ui:ImageIconSource>
 				</ui:NavigationViewItem.IconSource>
 			</ui:NavigationViewItem>
 			<ui:NavigationViewItem x:Name="NaviItem5" Content="关于程序">
 				<ui:NavigationViewItem.IconSource>
 					<ui:ImageIconSource>
-						<ic:FluentImage Icon="Info"/>
+						<ic:FluentImage Icon="Info" Foreground="{DynamicResource SystemAccentColor}"/>
 					</ui:ImageIconSource>
 				</ui:NavigationViewItem.IconSource>
 			</ui:NavigationViewItem>

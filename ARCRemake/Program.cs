@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using Avalonia.Media;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,7 +23,17 @@ namespace ARCRemake
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
-                .WithInterFont()
+            .With(new FontManagerOptions
+            {
+                DefaultFamilyName = "Microsoft YaHei UI",
+                FontFallbacks = new[]
+            {
+                new FontFallback { FontFamily = new FontFamily("Noto Sans CJK SC") },
+                new FontFallback { FontFamily = new FontFamily("Segoe UI") },
+                new FontFallback { FontFamily = new FontFamily("Arial") } 
+            }
+            })
+                
                 .LogToTrace();
     }
 }

@@ -4,6 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media;
 using Avalonia.Threading;
 using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Navigation;
@@ -34,6 +35,8 @@ public partial class DianMingPage : UserControl
 
     private async void Page_Loaded(object s, RoutedEventArgs e)
     {
+        
+       
         var timer = new DispatcherTimer();
         DMTimer = timer;
         RootClasses.DMPageCTS = new CancellationTokenSource();
@@ -97,7 +100,22 @@ public partial class DianMingPage : UserControl
 		var a23 = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
 		Fullnamelist = JsonServices.ReadJson<NameListConfig>(a23.CurrentNameListPath).Names;
         Pickernamelist = JsonServices.ReadJson<NameListConfig>(a23.CurrentNameListPath).Names;
-		
+		if(a23.DianMingFont != null)
+        {
+            NameBlock.FontFamily = new Avalonia.Media.FontFamily(a23.DianMingFont);
+        }
+        else
+        {
+            NameBlock.ClearValue(TextBlock.FontFamilyProperty);
+        }
+        if(a23.DianMingFontColor is { } color)
+        {
+            NameBlock.Foreground = new SolidColorBrush(color);
+        }
+        else
+        {
+            NameBlock.ClearValue(TextBlock.ForegroundProperty);
+        }
         timer.Interval = TimeSpan.FromMilliseconds(a23.IntervalTick);
         timer.Tick += (s, e) =>
         {

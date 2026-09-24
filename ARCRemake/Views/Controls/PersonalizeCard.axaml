@@ -1,0 +1,47 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:ui="using:FluentAvalonia.UI.Controls"
+			 Loaded="Control_Loaded"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="400"
+             x:Class="ARCRemake.PersonalizeCard">
+	<ScrollViewer>
+		<StackPanel>
+			<TextBlock Text="程序主题" FontSize="16" FontWeight="Bold" Margin="5"/>
+			<ui:SettingsExpanderItem>
+				<Grid HorizontalAlignment="Stretch">
+					<TextBlock Text="跟随系统主题:" VerticalAlignment="Center"/>
+					<ToggleSwitch HorizontalAlignment="Right" VerticalAlignment="Center" Click="FollowSystemThemeT_Click" x:Name="FollowSystemThemeT"/>
+				</Grid>
+			</ui:SettingsExpanderItem>
+			<ui:SettingsExpanderItem>
+				<Grid HorizontalAlignment="Stretch">
+					<TextBlock Text="使用深色主题:" VerticalAlignment="Center"/>
+					<ToggleSwitch HorizontalAlignment="Right" VerticalAlignment="Center" Click="UseDarkModeT_Click" x:Name="UseDarkModeT"/>
+				</Grid>
+			</ui:SettingsExpanderItem>
+			<TextBlock Text="点名字体" FontSize="16" FontWeight="Bold" Margin="5"/>
+			<ui:SettingsExpanderItem>
+				<Grid HorizontalAlignment="Stretch">
+					<TextBlock Text="选择点名字体:" VerticalAlignment="Center"/>
+					<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+						<Button Content="  选择字体  " Margin="5,0" Click="ChooseFont_Click" x:Name="FontButton"/>
+						<ColorPicker x:Name="RootPicker" ColorChanged="ChooseFontColor_Click"/>
+						<Button Content="  恢复默认  " Margin="5,0" Foreground="Red" Click="DefaultFont_Click"/>
+					</StackPanel>
+				</Grid>
+			</ui:SettingsExpanderItem>
+			<TextBlock Text="点名音乐" FontSize="16" FontWeight="Bold" Margin="5" IsEnabled="False"/>
+			<ui:SettingsExpanderItem IsEnabled="False">
+				<Grid HorizontalAlignment="Stretch">
+					<TextBlock Text="选择点名音乐:" VerticalAlignment="Center"/>
+					<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+						<Button Content="  选择音乐  " Margin="5,0"/>
+						<Button Content="  恢复默认  " Margin="5,0" Foreground="Red"/>
+					</StackPanel>
+				</Grid>
+			</ui:SettingsExpanderItem>
+		</StackPanel>
+	</ScrollViewer>
+</UserControl>

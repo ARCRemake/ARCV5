@@ -2,6 +2,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Styling;
 using System;
 using System.IO;
 using System.Linq;
@@ -30,7 +31,8 @@ namespace ARCRemake
                 {
                     try
                     {
-                        if (JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath()).OOBEStatus == false)
+                        var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
+                        if (a.OOBEStatus == false)
                         {
                             JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), ConfigHelper.InitConfig());
                             desktop.MainWindow = new OOBEWindow();
@@ -38,7 +40,17 @@ namespace ARCRemake
                             return;
 
                         }
-
+                        if(!a.AppUseSystemTheme)
+                        {
+                            if(a.AppUseDarkTheme)
+                            {
+                                Application.Current.RequestedThemeVariant = ThemeVariant.Dark;
+                            }
+                            else
+                            {
+                                Application.Current.RequestedThemeVariant = ThemeVariant.Light;
+                            }
+                        }
                         desktop.MainWindow = new MainWindow();
                         base.OnFrameworkInitializationCompleted();
                         return;

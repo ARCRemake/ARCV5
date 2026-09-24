@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using Avalonia.Media;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,8 +24,10 @@ namespace ARCRemake.Utils
         public required int BatchCounts { get; set; }
         public required bool StartUpCheckUpdate { get; set; }
         public required bool UsingHoverBall { get; set; }
-        public required int HoverWindowX;
-        public required int HoverWindowY;
+        public required int HoverWindowX { get; set; }
+        public required int HoverWindowY { get; set; }
+        public required Color? DianMingFontColor { get; set; }
+        public required string? DianMingFont { get; set; }
     }
 
     public class UpdateConfig
@@ -49,7 +52,9 @@ namespace ARCRemake.Utils
                 StartUpCheckUpdate = true,
                 UsingHoverBall = true,
                 HoverWindowX = 100,
-                HoverWindowY = 100
+                HoverWindowY = 100,
+                DianMingFont = null,
+                DianMingFontColor = null
             };
         }
     }

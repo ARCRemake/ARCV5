@@ -10,7 +10,7 @@ namespace ARCRemake.Utils
 {
     public class RootClasses
     {
-        public const string AppVersion = "1.0.0";
+        public const string AppVersion = "1.1.0";
         public static string DianMingMode = "常规点名";
         public static string? EditListPath = null;
         public static MainWindow MainWindow;

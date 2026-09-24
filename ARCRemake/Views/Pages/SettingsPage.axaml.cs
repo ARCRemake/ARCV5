@@ -75,6 +75,8 @@ public partial class SettingsPage : UserControl
             }
         }
 
+        
+
 
 
         CGDM.Value = a2.IntervalTick;

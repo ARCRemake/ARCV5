@@ -27,7 +27,7 @@
 						<Grid HorizontalAlignment="Stretch"  Margin="5">
 							<TextBlock Text="名单选择:" VerticalAlignment="Center"/>
 							
-							<ComboBox x:Name="NameListBox" HorizontalAlignment="Stretch" Margin="70,0,0,0" VerticalAlignment="Center" SelectionChanged="NameListBox_SelectionChanged"/>
+							<ComboBox PlaceholderText="暂无可用配置项" x:Name="NameListBox" HorizontalAlignment="Stretch" Margin="70,0,0,0" VerticalAlignment="Center" SelectionChanged="NameListBox_SelectionChanged"/>
 
 						</Grid>
 					</ui:SettingsExpanderItem>

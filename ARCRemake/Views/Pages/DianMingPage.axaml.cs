@@ -34,6 +34,8 @@ public partial class DianMingPage : UserControl
 
     private async void Page_Loaded(object s, RoutedEventArgs e)
     {
+        var timer = new DispatcherTimer();
+        DMTimer = timer;
         RootClasses.DMPageCTS = new CancellationTokenSource();
         ButtonIcon.Icon = FluentIcons.Common.Icon.Play;
         ButtonText.Text = "开始点名";
@@ -55,7 +57,7 @@ public partial class DianMingPage : UserControl
             var dlg = new ContentDialog
             {
                 Title = "错误",
-                Content = $"配置项不存在，请到设置页重新选择",
+                Content = $"名单不存在，请到设置页重新选择",
                 PrimaryButtonText = "确定",
                 DefaultButton = ContentDialogButton.Primary
             };
@@ -68,7 +70,7 @@ public partial class DianMingPage : UserControl
             var dlg = new ContentDialog
             {
                 Title = "错误",
-                Content = $"配置项不存在，请到设置页重新选择",
+                Content = $"名单不存在，请到设置页重新选择",
                 PrimaryButtonText = "确定",
                 DefaultButton = ContentDialogButton.Primary
             };
@@ -85,7 +87,7 @@ public partial class DianMingPage : UserControl
             var dlg = new ContentDialog
             {
                 Title = "错误",
-                Content = $"配置项不合法，请到设置页重新选择",
+                Content = $"名单不合法，请到设置页重新选择",
                 PrimaryButtonText = "确定",
                 DefaultButton = ContentDialogButton.Primary
             };
@@ -95,7 +97,7 @@ public partial class DianMingPage : UserControl
 		var a23 = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
 		Fullnamelist = JsonServices.ReadJson<NameListConfig>(a23.CurrentNameListPath).Names;
         Pickernamelist = JsonServices.ReadJson<NameListConfig>(a23.CurrentNameListPath).Names;
-		var timer = new DispatcherTimer();
+		
         timer.Interval = TimeSpan.FromMilliseconds(a23.IntervalTick);
         timer.Tick += (s, e) =>
         {

@@ -44,7 +44,7 @@ namespace ARCRemake.Utils
                             PrimaryButtonText = "立即更新",
                             SecondaryButtonText = "推迟更新"
                         };
-                        if(await dlg.ShowAsync() == ContentDialogResult.Primary)
+                        if(await dlg.ShowAsync(RootClasses.MainWindow) == ContentDialogResult.Primary)
                         {
                             switch(GetSystem())
                             {
@@ -111,7 +111,7 @@ namespace ARCRemake.Utils
                                 DefaultButton = ContentDialogButton.Primary,
                                 PrimaryButtonText = "确定"
                             };
-                            await dlg.ShowAsync();
+                            await dlg.ShowAsync(RootClasses.MainWindow);
                         }
                     }
                 }
@@ -126,6 +126,7 @@ namespace ARCRemake.Utils
                         DefaultButton = ContentDialogButton.Primary,
                         PrimaryButtonText = "确定"
                     };
+                    await dlg.ShowAsync(RootClasses.MainWindow);
                 }
             }
         }

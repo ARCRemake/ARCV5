@@ -1,0 +1,13 @@
+{
+    "HoverWindowX": 100,
+    "HoverWindowY": 100,
+    "AppUseDarkTheme": true,
+    "AppUseSystemTheme": true,
+    "OOBEStatus": true,
+    "CurrentNameListPath": "/media/HiteVision/项目U盘/ARCV5/ARCRemake/NameLists/初三4.json",
+    "IntervalTick": 50,
+    "ScheduledSeconds": 10,
+    "BatchCounts": 3,
+    "StartUpCheckUpdate": true,
+    "UsingHoverBall": true
+}

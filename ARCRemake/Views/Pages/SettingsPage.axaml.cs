@@ -86,12 +86,12 @@ public partial class SettingsPage : UserControl
 
     private void NameListBox_SelectionChanged(object s, RoutedEventArgs e)
     {
-        
-        if(NameListBox.SelectedItem is ComboBoxItem cbi)
+
+        if (NameListBox.SelectedItem is ComboBoxItem cbi)
         {
-            if(cbi.Tag is string cbitag)
+            if (cbi.Tag is string cbitag)
             {
-                if(cbitag != null)
+                if (cbitag != null)
                 {
                     var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
                     a.CurrentNameListPath = (string)((ComboBoxItem)NameListBox.SelectedItem).Tag;
@@ -205,81 +205,17 @@ public partial class SettingsPage : UserControl
 
     private void AddNameList_Click(object s, RoutedEventArgs e)
     {
-        var win = new NameListWindow();
-        win.ShowDialog(RootClasses.MainWindow);
-        NameListBox.Items.Clear();
-        foreach (var a3 in Directory.EnumerateFiles(RootClasses.NameListFolder(), "*.json"))
-        {
-            try
-            {
-                var b = JsonServices.ReadJson<NameListConfig>(a3);
-                var ci = new ComboBoxItem
-                {
-                    Content = $"{b.ListName}（{a3}）",
-                    Tag = $"{a3}"
-                };
+        RootClasses.EditListPath = null;
+        RootClasses.MainWindow.RootFrame.Navigate(typeof(NameListPage));
 
-                NameListBox.Items.Add(ci);
-            }
-            catch
-            {
-                continue;
-            }
-
-            
-        }
-        var a2 = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
-        foreach (var a4 in NameListBox.Items)
-        {
-            if (a4 is ComboBoxItem a5)
-            {
-                if (Path.GetFileName((string)a5.Tag) == Path.GetFileName(a2.CurrentNameListPath))
-                {
-                    NameListBox.SelectedItem = a5;
-                    break;
-                }
-            }
-        }
     }
 
     private void ModifyNameList_Click(object s, RoutedEventArgs e)
     {
         var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
-        var win = new NameListWindow(a.CurrentNameListPath);
-        win.ShowDialog(RootClasses.MainWindow);
-        NameListBox.Items.Clear();
-        foreach (var a3 in Directory.EnumerateFiles(RootClasses.NameListFolder(), "*.json"))
-        {
-            try
-            {
-                var b = JsonServices.ReadJson<NameListConfig>(a3);
-                var ci = new ComboBoxItem
-                {
-                    Content = $"{b.ListName}（{a3}）",
-                    Tag = $"{a3}"
-                };
+        RootClasses.EditListPath = a.CurrentNameListPath;
+        RootClasses.MainWindow.RootFrame.Navigate(typeof(NameListPage));
 
-                NameListBox.Items.Add(ci);
-            }
-            catch
-            {
-                continue;
-            }
-
-
-        }
-        var a2 = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
-        foreach (var a4 in NameListBox.Items)
-        {
-            if (a4 is ComboBoxItem a5)
-            {
-                if (Path.GetFileName((string)a5.Tag) == Path.GetFileName(a2.CurrentNameListPath))
-                {
-                    NameListBox.SelectedItem = a5;
-                    break;
-                }
-            }
-        }
     }
 
     private async void DelNameList_Click(object s, RoutedEventArgs e)
@@ -298,8 +234,9 @@ public partial class SettingsPage : UserControl
             File.Delete(a.CurrentNameListPath);
             if (Directory.EnumerateFiles(RootClasses.NameListFolder()).Count() == 0)
             {
-                var win = new NameListWindow();
-                await win.ShowDialog(RootClasses.MainWindow);
+                a.CurrentNameListPath = "";
+                JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), a);
+                NameListBox.Items.Clear();
             }
             else
             {
@@ -334,7 +271,7 @@ public partial class SettingsPage : UserControl
 
     private void UsingHoverBall_Click(object s, RoutedEventArgs e)
     {
-        
+
 
         if (UsingHoverBall.IsChecked == true)
         {
@@ -350,8 +287,8 @@ public partial class SettingsPage : UserControl
                     RootClasses.HoverWindow.Show();
                 }
             }
-            
-                
+
+
         }
         else
         {
@@ -396,7 +333,7 @@ public partial class SettingsPage : UserControl
             };
             if (await dlg.ShowAsync() == ContentDialogResult.Primary)
             {
-                if(!File.Exists(newcfg.CurrentNameListPath))
+                if (!File.Exists(newcfg.CurrentNameListPath))
                 {
                     var dlg2 = new ContentDialog
                     {
@@ -409,7 +346,7 @@ public partial class SettingsPage : UserControl
                     await dlg2.ShowAsync();
                     return;
                 }
-                File.Copy(newcfg.CurrentNameListPath,Path.Combine(RootClasses.NameListFolder(),Path.GetFileName(newcfg.CurrentNameListPath)));
+                File.Copy(newcfg.CurrentNameListPath, Path.Combine(RootClasses.NameListFolder(), Path.GetFileName(newcfg.CurrentNameListPath)));
                 JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(), newcfg);
 
                 var dl2g = new ContentDialog
@@ -500,7 +437,7 @@ public partial class SettingsPage : UserControl
         try
         {
             var k = JsonServices.ReadJson<NameListConfig>(files[0].TryGetLocalPath());
-            File.Copy(files[0].TryGetLocalPath(),Path.Combine(RootClasses.NameListFolder(), $"{files[0].Name}"));
+            File.Copy(files[0].TryGetLocalPath(), Path.Combine(RootClasses.NameListFolder(), $"{files[0].Name}"));
             var dlg = new ContentDialog
             {
                 Title = "提示",
@@ -532,14 +469,32 @@ public partial class SettingsPage : UserControl
 
     }
 
-    private void ExportNL_Click(object s, RoutedEventArgs e)
+    private async void ExportNL_Click(object s, RoutedEventArgs e)
     {
-        Process.Start(new ProcessStartInfo
+		var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
+        var topLevel = TopLevel.GetTopLevel(this);
+
+        var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            FileName = RootClasses.NameListFolder(),
-            UseShellExecute = true,
+            Title = "保存名单文件",
+            FileTypeChoices = new[] {
+            new FilePickerFileType("配置文件") { Patterns = new[] { "*.json" } }
+        }
         });
+
+        if (file is not null)
+        {
+            JsonServices.WriteJson<NameListConfig>(file.TryGetLocalPath(), JsonServices.ReadJson<NameListConfig>(a.CurrentNameListPath));
+            var dlg = new ContentDialog
+            {
+                Title = "提示",
+                Content = $"导出名单成功。",
+                PrimaryButtonText = "确定",
+                DefaultButton = ContentDialogButton.Primary
+            };
+            await dlg.ShowAsync();
+        }
     }
 
-    
+
 }

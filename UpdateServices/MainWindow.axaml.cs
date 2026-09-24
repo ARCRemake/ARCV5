@@ -17,6 +17,7 @@ namespace UpdateServices
         private string Websitepath;
         private string Outputpath;
         private string StartApplicationName;
+        private string TempFileName = Path.Combine(Path.GetTempPath(),$"Temp{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}.zip");
         public MainWindow()
         {
             InitializeComponent();
@@ -41,9 +42,9 @@ namespace UpdateServices
             StartApplicationName = args[2];
             log.Text += "尝试启动下载……\r\n";
             bool DownloadStatus = false;
-            if (File.Exists(Path.GetTempPath() + "\\Temp.zip"))
+            if (File.Exists(TempFileName))
             {
-                File.Delete(Path.GetTempPath() + "\\Temp.zip");
+                File.Delete(TempFileName);
             }
             try
             {
@@ -51,7 +52,7 @@ namespace UpdateServices
                 var downloader = new Downloader
                 {
                     Url = Websitepath,
-                    SavePath = Path.GetTempPath() + "\\Temp.zip",
+                    SavePath = TempFileName,
                     Completed = (async (s, e) =>
                     {
                         if (s)
@@ -93,10 +94,10 @@ namespace UpdateServices
 
                 try
                 {
-                    ZipFile.ExtractToDirectory(Path.GetTempPath() + "\\Temp.zip", Outputpath, true);
+                    ZipFile.ExtractToDirectory(TempFileName, Outputpath, true);
 
                     log.Text += "解压已完成，正在进行清理，即将退出程序……\r\n";
-                    File.Delete(Path.GetTempPath() + "\\Temp.zip");
+                    File.Delete(TempFileName);
                 }
                 catch (Exception ex)
                 {

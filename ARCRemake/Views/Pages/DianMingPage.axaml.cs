@@ -23,28 +23,22 @@ public partial class DianMingPage : UserControl
     private List<string> Pickernamelist = new List<string>();
     private DispatcherTimer DMTimer;
     private Random randomname = new Random();
-    private CancellationTokenSource DMPageCTS;
+    
     public DianMingPage()
     {
         InitializeComponent();
-        var a2 = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
-        var timer = new DispatcherTimer();
-        timer.Interval = TimeSpan.FromMilliseconds(a2.IntervalTick);
-        timer.Tick += (s, e) =>
-        {
-            NameBlock.Text = Fullnamelist[randomname.Next(0, Fullnamelist.Count - 1)];
-        };
-        DMTimer = timer;
         
+        
+
     }
 
     private async void Page_Loaded(object s, RoutedEventArgs e)
     {
-        DMPageCTS = new CancellationTokenSource();
+        RootClasses.DMPageCTS = new CancellationTokenSource();
         ButtonIcon.Icon = FluentIcons.Common.Icon.Play;
         ButtonText.Text = "开始点名";
         ModeTitle.Text = RootClasses.DianMingMode;
-        if(RootClasses.DianMingMode != "批量点名")
+        if (RootClasses.DianMingMode != "批量点名")
         {
             ListDianMingBox.IsVisible = false;
             NameBlock.IsVisible = true;
@@ -55,7 +49,20 @@ public partial class DianMingPage : UserControl
             NameBlock.IsVisible = false;
         }
         var a2 = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
-        if(!File.Exists(a2.CurrentNameListPath))
+        if (a2.CurrentNameListPath == "")
+        {
+            RootButton.IsEnabled = false;
+            var dlg = new ContentDialog
+            {
+                Title = "错误",
+                Content = $"配置项不存在，请到设置页重新选择",
+                PrimaryButtonText = "确定",
+                DefaultButton = ContentDialogButton.Primary
+            };
+            await dlg.ShowAsync();
+            return;
+        }
+        if (!File.Exists(a2.CurrentNameListPath))
         {
             RootButton.IsEnabled = false;
             var dlg = new ContentDialog
@@ -85,16 +92,29 @@ public partial class DianMingPage : UserControl
             await dlg.ShowAsync();
             return;
         }
-        Fullnamelist = JsonServices.ReadJson<NameListConfig>(a2.CurrentNameListPath).Names;
-        Pickernamelist = JsonServices.ReadJson<NameListConfig>(a2.CurrentNameListPath).Names;
+		var a23 = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
+		Fullnamelist = JsonServices.ReadJson<NameListConfig>(a23.CurrentNameListPath).Names;
+        Pickernamelist = JsonServices.ReadJson<NameListConfig>(a23.CurrentNameListPath).Names;
+		var timer = new DispatcherTimer();
+        timer.Interval = TimeSpan.FromMilliseconds(a23.IntervalTick);
+        timer.Tick += (s, e) =>
+        {
+            NameBlock.Text = Fullnamelist[randomname.Next(0, Fullnamelist.Count)];
+        };
+        DMTimer = timer;
+        
+		RootButton.IsEnabled = true;
+	
+        
+        
 
 
     }
     private async void Page_Unloaded(object s, RoutedEventArgs e)
     {
-        DMPageCTS.Cancel();
-        DianmingStatus = false;
+		DianmingStatus = false;
         DMTimer.Stop();
+        RootClasses.DMPageCTS.Cancel();
         NameBlock.Text = "请开始点名";
         Fullnamelist.Clear();
         Pickernamelist.Clear();
@@ -104,12 +124,18 @@ public partial class DianMingPage : UserControl
 
     private async void RootButton_Click(object s, RoutedEventArgs e)
     {
-        await Button_ChangeStatus(DMPageCTS);
+        await Button_ChangeStatus(RootClasses.DMPageCTS);
     }
+    
+    
 
-    private async Task Button_ChangeStatus(CancellationTokenSource cts)
+    public async Task Button_ChangeStatus(CancellationTokenSource cts)
     {
-        switch(RootClasses.DianMingMode)
+		if(RootButton.IsEnabled == false)
+		{
+			return;
+		}
+        switch (RootClasses.DianMingMode)
         {
             case "常规点名":
                 if (DianmingStatus)
@@ -118,18 +144,22 @@ public partial class DianMingPage : UserControl
                     ButtonText.Text = "开始点名";
                     DMTimer.Stop();
                     DianmingStatus = false;
-                    if(Pickernamelist.Count > 0){
-							NameBlock.Text = Pickernamelist[randomname.Next(0, Pickernamelist.Count - 1)];
-                    		Pickernamelist.RemoveAll(x => x == NameBlock.Text);
-                	}
-					else
-					{
+                    if (Pickernamelist.Count > 0)
+                    {
+                        NameBlock.Text = Pickernamelist[randomname.Next(0, Pickernamelist.Count)];
+                        Pickernamelist.RemoveAll(x => x == NameBlock.Text);
+                    }
+                    else
+                    {
                         Pickernamelist.Clear();
                         Pickernamelist.AddRange(Fullnamelist);
                         NameBlock.Text = Pickernamelist[randomname.Next(0, Pickernamelist.Count - 1)];
-                    		Pickernamelist.RemoveAll(x => x == NameBlock.Text);
-					}
-				}
+                        Pickernamelist.RemoveAll(x => x == NameBlock.Text);
+
+
+
+                    }
+                }
                 else
                 {
                     ButtonIcon.Icon = FluentIcons.Common.Icon.Pause;
@@ -139,21 +169,22 @@ public partial class DianMingPage : UserControl
                 }
                 break;
             case "立即点名":
-				    if(Pickernamelist.Count > 0){
-							NameBlock.Text = Pickernamelist[randomname.Next(0, Pickernamelist.Count - 1)];
-                    		Pickernamelist.RemoveAll(x => x == NameBlock.Text);
-                	}
-					else
-					{
-                        Pickernamelist.Clear();
-                        Pickernamelist.AddRange(Fullnamelist);
-                        NameBlock.Text = Pickernamelist[randomname.Next(0, Pickernamelist.Count - 1)];
-                    	Pickernamelist.RemoveAll(x => x == NameBlock.Text);
-					}
+                if (Pickernamelist.Count > 0)
+                {
+                    NameBlock.Text = Pickernamelist[randomname.Next(0, Pickernamelist.Count - 1)];
+                    Pickernamelist.RemoveAll(x => x == NameBlock.Text);
+                }
+                else
+                {
+                    Pickernamelist.Clear();
+                    Pickernamelist.AddRange(Fullnamelist);
+                    NameBlock.Text = Pickernamelist[randomname.Next(0, Pickernamelist.Count - 1)];
+                    Pickernamelist.RemoveAll(x => x == NameBlock.Text);
+                }
                 break;
             case "批量点名":
                 var a2 = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
-                if(ListDianMingBox.Items.Count != 0) ListDianMingBox.Items.Clear();
+                if (ListDianMingBox.Items.Count != 0) ListDianMingBox.Items.Clear();
                 for (int i = 0; i < a2.BatchCounts; i++)
                 {
                     if (Pickernamelist.Count > 0)
@@ -179,7 +210,14 @@ public partial class DianMingPage : UserControl
                 DianmingStatus = true;
                 DMTimer.Start();
                 RootButton.IsEnabled = false;
-                await Task.Delay(TimeSpan.FromSeconds(a23.ScheduledSeconds),cts.Token);
+                try
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(a23.ScheduledSeconds), cts.Token);
+                }
+                catch (Exception ex)
+                {
+					return;
+                }
                 RootButton.IsEnabled = true;
                 ButtonIcon.Icon = FluentIcons.Common.Icon.Play;
                 ButtonText.Text = "开始点名";

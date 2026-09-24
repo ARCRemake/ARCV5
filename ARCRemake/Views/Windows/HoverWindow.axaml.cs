@@ -15,6 +15,7 @@ public partial class HoverWindow : Window
     public HoverWindow()
     {
         InitializeComponent();
+
     }
 
     private void OnWindowPointerPressed(object? sender, PointerPressedEventArgs e)
@@ -22,10 +23,9 @@ public partial class HoverWindow : Window
         RootClasses.MainWindow.WindowState = WindowState.Normal;
         RootClasses.MainWindow.Activate();
         RootClasses.MainWindow.Focus();
-        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-        {
+        
             BeginMoveDrag(e);
-        }
+        
     }
 
     private void OnPointerEntered(object s, PointerEventArgs e)

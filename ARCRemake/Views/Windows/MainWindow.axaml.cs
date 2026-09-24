@@ -1,10 +1,12 @@
 using ARCRemake.Utils;
 using Avalonia;
 using Avalonia.Animation;
+using Avalonia.Input;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
 using FluentAvalonia.UI.Controls;
+using System.Threading;
 using FluentAvalonia.UI.Windowing;
 using System;
 using System.Linq;
@@ -20,13 +22,29 @@ namespace ARCRemake
             RootClasses.MainWindow = this;
             RootNavi.SelectedItem = NaviItem0;
         }
+        
+        protected override void OnPreviewKeyDown(KeyEventArgs e)
+        {
+            
+             if (e.Key == Key.Space)
+             {
+                 if(RootClasses.MainWindow.RootFrame.Content is DianMingPage dp)
+                 {
+                     if(dp.RootButton.IsFocused != true && dp.RootButton.IsEnabled == true)
+                     {
+                        await dp.Button_ChangeStatus(RootClasses.DMPageCTS);
+                        e.Handled = true; 
+                     }
+                 }
+            }
+            base.OnPreviewKeyDown(e);
+        }
 
         private void Window_Loaded(object s,RoutedEventArgs e)
         {
             if(JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath()).StartUpCheckUpdate)
             {
-
-                ChkUpd();
+                 UpdateServices.CheckUpdateAsync(true);
             }
             if (JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath()).UsingHoverBall == true)
             {
@@ -45,11 +63,6 @@ namespace ARCRemake
 
 
             }
-        }
-
-        private async Task ChkUpd()
-        {
-            UpdateServices.CheckUpdateAsync(true);
         }
 
         private void Window_Closing(object s,WindowClosingEventArgs e)
@@ -109,6 +122,13 @@ namespace ARCRemake
             }
             
 
+        }
+        
+        
+         
+         private void NavigationView_BackRequested(object sender, NavigationViewBackRequestedEventArgs e)
+        {
+            RootFrame.Navigate(typeof(SettingsPage));
         }
     }
 }

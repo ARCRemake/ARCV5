@@ -10,7 +10,7 @@
 			   Closing="Window_Closing"
         x:Class="ARCRemake.MainWindow"
         Title="自动点名器">
-	<ui:NavigationView  x:Name="RootNavi" SelectionChanged="RootNavi_SelectionChanged" ExpandedModeThresholdWidth="99999" IsBackButtonVisible="False" IsBackEnabled="False" IsSettingsVisible="False">
+	<ui:NavigationView  x:Name="RootNavi" SelectionChanged="RootNavi_SelectionChanged" ExpandedModeThresholdWidth="99999" IsBackButtonVisible="True" IsBackEnabled="False" IsSettingsVisible="False" BackRequested="NavigationView_BackRequested">
 		<ui:NavigationView.MenuItems>
 			<ui:NavigationViewItem x:Name="NaviItem0" Content="常规点名">
 				<ui:NavigationViewItem.IconSource>

@@ -62,8 +62,8 @@
 							<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
 								<Button Margin="5,0" VerticalAlignment="Center" Click="ExportNL_Click">
 									<StackPanel Orientation="Horizontal" >
-										<ic:FluentIcon Icon="Folder"/>
-										<TextBlock VerticalAlignment="Center" Text="打开名单文件夹"/>
+										<ic:FluentIcon Icon="Save"/>
+										<TextBlock VerticalAlignment="Center" Text="导出名单文件"/>
 									</StackPanel>
 								</Button>
 								<Button Margin="5,0" VerticalAlignment="Center" Click="ImportNL_Click">
@@ -92,7 +92,7 @@
 					<ui:SettingsExpanderItem>
 						<Grid Margin="5">
 							<TextBlock Text="常规点名间隔时长(ms):" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-							<NumericUpDown SizeChanged="CGDM_TextChanged" x:Name="CGDM" VerticalAlignment="Center" HorizontalAlignment="Right" FormatString="N0"
+							<NumericUpDown SizeChanged="CGDM_TextChanged" Minimum="1" x:Name="CGDM" VerticalAlignment="Center" HorizontalAlignment="Right" FormatString="N0"
                ParsingNumberStyle="Integer"
                Increment="1"/>
 						</Grid>
@@ -101,7 +101,7 @@
 					<ui:SettingsExpanderItem>
 						<Grid Margin="5">
 							<TextBlock Text="定时点名时长(s):" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-							<NumericUpDown SizeChanged="DSDM_TextChanged" x:Name="DSDM" VerticalAlignment="Center" HorizontalAlignment="Right" FormatString="N0"
+							<NumericUpDown SizeChanged="DSDM_TextChanged" Minimum="1" x:Name="DSDM" VerticalAlignment="Center" HorizontalAlignment="Right" FormatString="N0"
                ParsingNumberStyle="Integer"
                Increment="1"/>
 						</Grid>
@@ -110,7 +110,7 @@
 					<ui:SettingsExpanderItem>
 						<Grid Margin="5">
 							<TextBlock Text="批量点名个数:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-							<NumericUpDown SizeChanged="PLDM_TextChanged" x:Name="PLDM" VerticalAlignment="Center" HorizontalAlignment="Right" FormatString="N0"
+							<NumericUpDown SizeChanged="PLDM_TextChanged" Minimum="1" x:Name="PLDM" VerticalAlignment="Center" HorizontalAlignment="Right" FormatString="N0"
                ParsingNumberStyle="Integer"
                Increment="1"/>
 						</Grid>

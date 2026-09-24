@@ -22,12 +22,21 @@
 			</DockPanel>
 		
 		
-		<Button x:Name="ContinueButton" IsEnabled="False" Classes="accent" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15" Click="Button_Click">
-			<StackPanel Orientation="Horizontal">
-				<TextBlock Text=" " Margin="2"/>
-				<ic:FluentIcon Icon="ArrowRight" Margin="2"/>
-				<TextBlock Text="  继续  " Margin="2"/>
-			</StackPanel>
-		</Button>
+		<StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15" Orientation="Horizontal">
+			<Button Margin="5,0" VerticalAlignment="Center" Click="ImportNL_Click">
+									<StackPanel Orientation="Horizontal">
+										<ic:FluentIcon Icon="FolderAdd"/>
+										<TextBlock VerticalAlignment="Center" Text="导入名单文件"/>
+									</StackPanel>
+			</Button>
+			<Button Margin="5,0" x:Name="ContinueButton" IsEnabled="False" Classes="accent" Click="Button_Click">
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Text=" " Margin="2"/>
+					<ic:FluentIcon Icon="ArrowRight" Margin="2"/>
+					<TextBlock Text="  继续  " Margin="2"/>
+				</StackPanel>
+			</Button>
+			
+		</StackPanel>
 	</Grid>
 </UserControl>

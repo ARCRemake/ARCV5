@@ -10,6 +10,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Platform.Storage;
+using Avalonia.Styling;
+using FluentAvalonia.Core;
+using FluentAvalonia.UI.Controls;
+using System.Collections;
+using System.Diagnostics;
+using System.Linq;
 
 namespace ARCRemake;
 
@@ -103,6 +111,42 @@ public partial class AddNameList : UserControl
             await Task.Delay(50);
 
 
+        }
+
+    }
+
+	private async void ImportNL_Click(object s, RoutedEventArgs e)
+    {
+        var topLevel = TopLevel.GetTopLevel(this);
+        var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+        {
+            Title = "导入名单配置文件",
+            AllowMultiple = false,
+            FileTypeFilter = new[] {
+            new FilePickerFileType("名单文件") { Patterns = new[] { "*.json" } }
+        }
+        });
+        try
+        {
+            var k = JsonServices.ReadJson<NameListConfig>(files[0].TryGetLocalPath());
+            File.Copy(files[0].TryGetLocalPath(), Path.Combine(RootClasses.NameListFolder(), $"{files[0].Name}"));
+            var a = JsonServices.ReadJson<AppConfig>(RootClasses.ConfigPath());
+        		a.OOBEStatus = true;
+        		a.CurrentNameListPath = Path.Combine(RootClasses.NameListFolder(),$"{files[0].Name}");
+        		JsonServices.WriteJson<AppConfig>(RootClasses.ConfigPath(),a);
+        		RootClasses.OOBEWindow.RootFrame.Navigate(typeof(LastScreen));
+        }
+        catch
+        {
+            var dlg = new ContentDialog
+            {
+                Title = "警告",
+                Content = $"配置项不合法，请重新选择。",
+                PrimaryButtonText = "确定",
+                SecondaryButtonText = "取消",
+                DefaultButton = ContentDialogButton.Primary
+            };
+            await dlg.ShowAsync();
         }
 
     }

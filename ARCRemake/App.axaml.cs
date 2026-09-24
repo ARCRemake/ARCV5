@@ -1,4 +1,4 @@
-using ARCRemake.Utils;
+﻿using ARCRemake.Utils;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -18,7 +18,7 @@ namespace ARCRemake
 
         public override void OnFrameworkInitializationCompleted()
         {
-            
+
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 if (!Directory.Exists(RootClasses.NameListFolder()))
@@ -38,13 +38,7 @@ namespace ARCRemake
                             return;
 
                         }
-                        if(Directory.EnumerateFiles(RootClasses.NameListFolder()).Count() == 0)
-                        {
-                            desktop.MainWindow = new NameListWindow();
-                            base.OnFrameworkInitializationCompleted();
 
-                            return;
-                        }
                         desktop.MainWindow = new MainWindow();
                         base.OnFrameworkInitializationCompleted();
                         return;
@@ -56,7 +50,7 @@ namespace ARCRemake
                         base.OnFrameworkInitializationCompleted();
                         return;
                     }
-                    
+
                 }
                 else
                 {
@@ -66,9 +60,9 @@ namespace ARCRemake
                     return;
                 }
             }
-            
 
-            
+
+
         }
     }
 }

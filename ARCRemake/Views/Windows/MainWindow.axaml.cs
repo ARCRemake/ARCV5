@@ -21,24 +21,28 @@ namespace ARCRemake
             InitializeComponent();
             RootClasses.MainWindow = this;
             RootNavi.SelectedItem = NaviItem0;
+            this.AddHandler(
+            InputElement.KeyDownEvent,
+            OnPreviewKeyDown,
+            RoutingStrategies.Tunnel
+            );
         }
         
-        protected override void OnPreviewKeyDown(KeyEventArgs e)
+        private void OnPreviewKeyDown(object sender,KeyEventArgs e)
         {
-            
              if (e.Key == Key.Space)
              {
                  if(RootClasses.MainWindow.RootFrame.Content is DianMingPage dp)
                  {
                      if(dp.RootButton.IsFocused != true && dp.RootButton.IsEnabled == true)
                      {
-                        await dp.Button_ChangeStatus(RootClasses.DMPageCTS);
+                        dp.Button_ChangeStatus(RootClasses.DMPageCTS);
                         e.Handled = true; 
                      }
                  }
             }
-            base.OnPreviewKeyDown(e);
         }
+
 
         private void Window_Loaded(object s,RoutedEventArgs e)
         {

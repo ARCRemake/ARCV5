@@ -10,22 +10,87 @@ namespace ARCRemake;
 
 public partial class HoverWindow : Window
 {
-    public static IBrush IconForeground = new SolidColorBrush(Color.Parse("#C026D3"));
-    public static IBrush IconBackground = new SolidColorBrush(Color.Parse("#C026D3"), 0.5);
+    private bool _isPressed;
+    private bool _isDragging;
+    private PixelPoint _startScreenPoint;     
+    private PixelPoint _windowStartPosition;   
+    private const double DragThresholdPixels = 6; 
+
     public HoverWindow()
     {
         InitializeComponent();
 
     }
 
-    private void OnWindowPointerPressed(object? sender, PointerPressedEventArgs e)
+    protected override void OnPointerPressed(PointerPressedEventArgs e)
+    {
+        base.OnPointerPressed(e);
+
+        var point = e.GetCurrentPoint(this);
+        if (!point.Properties.IsLeftButtonPressed) return;
+
+        _isPressed = true;
+        _isDragging = false;
+
+        var posInWindow = e.GetPosition(this);
+        _startScreenPoint = this.PointToScreen(posInWindow);
+        _windowStartPosition = this.Position;
+
+        e.Pointer.Capture(this);
+    }
+
+    protected override void OnPointerMoved(PointerEventArgs e)
+    {
+        base.OnPointerMoved(e);
+
+        if (!_isPressed) return;
+
+        var point = e.GetCurrentPoint(this);
+        if (!point.Properties.IsLeftButtonPressed) return;
+
+        var currentPosInWindow = e.GetPosition(this);
+        var currentScreenPoint = this.PointToScreen(currentPosInWindow);
+
+        double dx = currentScreenPoint.X - _startScreenPoint.X;
+        double dy = currentScreenPoint.Y - _startScreenPoint.Y;
+        double distance = Math.Sqrt(dx * dx + dy * dy);
+
+        if (!_isDragging && distance >= DragThresholdPixels)
+        {
+            _isDragging = true;
+        }
+
+        if (_isDragging)
+        {
+            this.Position = new PixelPoint(
+                _windowStartPosition.X + (int)dx,
+                _windowStartPosition.Y + (int)dy
+            );
+        }
+    }
+
+    protected override void OnPointerReleased(PointerReleasedEventArgs e)
+    {
+        base.OnPointerReleased(e);
+
+        if (!_isPressed) return;
+
+        e.Pointer.Capture(null); 
+
+        if (!_isDragging)
+        {
+            OnWindowClick();
+        }
+
+        _isPressed = false;
+        _isDragging = false;
+    }
+
+    private void OnWindowClick()
     {
         RootClasses.MainWindow.WindowState = WindowState.Normal;
         RootClasses.MainWindow.Activate();
         RootClasses.MainWindow.Focus();
-        
-            BeginMoveDrag(e);
-        
     }
 
     private void OnPointerEntered(object s, PointerEventArgs e)

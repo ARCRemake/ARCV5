@@ -13,7 +13,6 @@
         Background="Transparent"
         TransparencyLevelHint="Transparent"
         x:Class="ARCRemake.HoverWindow"
-		PointerPressed="OnWindowPointerPressed"
 		PointerEntered="OnPointerEntered"
 		PointerExited="OnPointerExited"
         Title="HoverWindow">
